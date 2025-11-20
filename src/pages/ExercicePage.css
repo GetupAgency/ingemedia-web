@@ -1,0 +1,284 @@
+.exercice-page {
+  animation: fadeIn 0.3s ease-in;
+}
+
+.exercice-header {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  background: var(--bg-medium);
+  border-radius: 12px;
+  border: 1px solid var(--border);
+}
+
+.back-btn, .reset-btn {
+  padding: 0.75rem 1.5rem;
+  background: var(--bg-light);
+  color: var(--text-primary);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.back-btn:hover {
+  background: var(--primary);
+  border-color: var(--primary);
+}
+
+.reset-btn:hover {
+  background: var(--danger);
+  border-color: var(--danger);
+}
+
+.exercice-info {
+  flex: 1;
+}
+
+.exercice-page-title {
+  font-size: 1.75rem;
+  margin-bottom: 0.75rem;
+  color: var(--text-primary);
+}
+
+.exercice-badges {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.badge {
+  padding: 0.4rem 0.8rem;
+  border-radius: 16px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.badge-type {
+  background: var(--bg-light);
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.badge-difficulty {
+  background: rgba(245, 158, 11, 0.2);
+  color: var(--warning);
+}
+
+.exercice-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+.consigne-panel {
+  background: var(--bg-medium);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.consigne-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  background: var(--bg-light);
+  border-bottom: 1px solid var(--border);
+}
+
+.consigne-header h2 {
+  font-size: 1.25rem;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.toggle-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-primary);
+  font-size: 1.5rem;
+  cursor: pointer;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  transition: background 0.3s;
+}
+
+.toggle-btn:hover {
+  background: var(--bg-medium);
+}
+
+.consigne-content {
+  padding: 1.5rem;
+}
+
+.consigne-content p {
+  font-size: 1.05rem;
+  line-height: 1.8;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+.editors-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+.preview-and-validation {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.preview-container {
+  min-height: 400px;
+}
+
+.react-info-panel {
+  background: var(--bg-medium);
+  border: 2px solid var(--primary);
+  border-radius: 12px;
+  padding: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+.info-box-react {
+  color: var(--text-primary);
+}
+
+.info-box-react h3 {
+  color: var(--primary);
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+}
+
+.info-box-react p {
+  color: var(--text-secondary);
+  line-height: 1.8;
+  margin: 1rem 0;
+}
+
+.info-box-react ul {
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0;
+}
+
+.info-box-react li {
+  padding: 0.75rem 0;
+  padding-left: 1.5rem;
+  position: relative;
+  color: var(--text-secondary);
+}
+
+.info-box-react li::before {
+  content: '→';
+  position: absolute;
+  left: 0;
+  color: var(--primary);
+  font-weight: bold;
+}
+
+.info-box-react a {
+  color: var(--primary);
+  text-decoration: none;
+  font-weight: 600;
+  border-bottom: 2px solid transparent;
+  transition: all 0.3s;
+}
+
+.info-box-react a:hover {
+  border-bottom-color: var(--primary);
+}
+
+.info-box-react pre {
+  background: var(--bg-dark);
+  padding: 1rem;
+  border-radius: 8px;
+  overflow-x: auto;
+  margin: 1rem 0;
+}
+
+.info-box-react code {
+  color: var(--success);
+  font-family: 'Monaco', 'Menlo', monospace;
+}
+
+.error-message {
+  text-align: center;
+  padding: 4rem 2rem;
+  background: var(--bg-medium);
+  border-radius: 12px;
+}
+
+.error-message h2 {
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  color: var(--text-primary);
+}
+
+.error-message button {
+  padding: 0.75rem 1.5rem;
+  background: var(--primary);
+  color: var(--text-primary);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+@media (min-width: 1200px) {
+  .exercice-layout {
+    grid-template-areas:
+      "consigne consigne"
+      "editors preview";
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .consigne-panel {
+    grid-area: consigne;
+  }
+
+  .editors-container {
+    grid-area: editors;
+  }
+
+  .preview-and-validation {
+    grid-area: preview;
+    position: sticky;
+    top: 1.5rem;
+    height: fit-content;
+  }
+}
+
+@media (max-width: 768px) {
+  .exercice-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1rem;
+  }
+
+  .exercice-page-title {
+    font-size: 1.5rem;
+  }
+
+  .back-btn, .reset-btn {
+    width: 100%;
+  }
+
+  .consigne-content p {
+    font-size: 1rem;
+  }
+}
+

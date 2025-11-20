@@ -1,0 +1,108 @@
+.exercice-item {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 1.5rem;
+  background: var(--bg-medium);
+  border: 2px solid var(--border);
+  border-radius: 12px;
+  text-decoration: none;
+  color: var(--text-primary);
+  transition: all 0.3s ease;
+}
+
+.exercice-item:hover {
+  border-color: var(--module-color);
+  transform: translateX(8px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  text-decoration: none;
+}
+
+.exercice-item:hover .exercice-arrow {
+  transform: translateX(4px);
+  color: var(--module-color);
+}
+
+.exercice-number {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+  min-width: 50px;
+  text-align: center;
+}
+
+.exercice-content {
+  flex: 1;
+}
+
+.exercice-title {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+  color: var(--text-primary);
+}
+
+.exercice-preview {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.exercice-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: flex-end;
+}
+
+.exercice-difficulty {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.difficulty-stars {
+  color: var(--warning);
+  font-size: 1rem;
+}
+
+.exercice-type-badge {
+  padding: 0.3rem 0.8rem;
+  background: var(--bg-light);
+  border-radius: 16px;
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.exercice-arrow {
+  font-size: 1.5rem;
+  color: var(--text-secondary);
+  transition: all 0.3s ease;
+}
+
+@media (max-width: 768px) {
+  .exercice-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .exercice-number {
+    min-width: auto;
+    text-align: left;
+  }
+
+  .exercice-meta {
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .exercice-arrow {
+    display: none;
+  }
+}
+
