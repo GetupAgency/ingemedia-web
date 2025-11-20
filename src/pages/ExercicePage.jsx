@@ -30,6 +30,9 @@ function ExercicePage() {
     console.log('Type:', exercice.type);
     console.log('code_initial:', exercice.code_initial);
 
+    // Scroll vers le haut de la page
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
     // Réinitialise tous les états d'abord
     setHtmlCode('');
     setCssCode('');

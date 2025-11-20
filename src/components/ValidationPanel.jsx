@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { validateHTMLCode, validateCSSCode } from '../utils/validator';
 import './ValidationPanel.css';
@@ -7,6 +7,11 @@ function ValidationPanel({ exercice, htmlCode, cssCode, jsCode, nextExerciceId }
   const [result, setResult] = useState(null);
   const [isValidating, setIsValidating] = useState(false);
   const navigate = useNavigate();
+
+  // Réinitialise le résultat quand on change d'exercice
+  useEffect(() => {
+    setResult(null);
+  }, [exercice.id]);
 
   const handleValidate = () => {
     setIsValidating(true);
