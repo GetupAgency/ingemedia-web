@@ -93,7 +93,7 @@ function Preview({ html, css, js }) {
         <iframe
           srcDoc={srcDoc}
           title="preview"
-          sandbox="allow-scripts"
+          sandbox="allow-scripts allow-forms allow-modals allow-popups"
           className="preview-iframe"
         />
       </div>
