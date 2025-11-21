@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import logoIngemedia from '../data/assets/logo.png';
 import './Header.css';
 
 function Header() {
   const location = useLocation();
-  const isHome = location.pathname === '/';
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const isActive = (path) => location.pathname === path;
 
   return (
     <header className="header">
@@ -17,14 +19,40 @@ function Header() {
             <span className="logo-subtitle">Formation Développement - Master 1</span>
           </div>
         </Link>
-        {!isHome && (
-          <Link to="/" className="back-home">
-            <svg className="back-icon" width="20" height="20" viewBox="0 0 20 20" fill="none">
-              <path d="M15 10H5M5 10L10 5M5 10L10 15" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
-            Retour aux modules
+
+        <button 
+          className="mobile-menu-toggle"
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+        >
+          {mobileMenuOpen ? '✕' : '☰'}
+        </button>
+
+        <nav className={`nav-menu ${mobileMenuOpen ? 'open' : ''}`}>
+          <Link 
+            to="/" 
+            className={`nav-link ${isActive('/') ? 'active' : ''}`}
+            onClick={() => setMobileMenuOpen(false)}
+          >
+            <span className="nav-icon">🏠</span>
+            Modules
           </Link>
-        )}
+          <Link 
+            to="/competences" 
+            className={`nav-link ${isActive('/competences') ? 'active' : ''}`}
+            onClick={() => setMobileMenuOpen(false)}
+          >
+            <span className="nav-icon">💼</span>
+            Compétences
+          </Link>
+          <Link 
+            to="/lexique" 
+            className={`nav-link ${isActive('/lexique') ? 'active' : ''}`}
+            onClick={() => setMobileMenuOpen(false)}
+          >
+            <span className="nav-icon">📖</span>
+            Lexique
+          </Link>
+        </nav>
       </div>
     </header>
   );
