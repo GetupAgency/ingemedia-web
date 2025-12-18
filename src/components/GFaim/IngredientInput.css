@@ -1,0 +1,49 @@
+/* 
+  ⚠️ STYLES DE BASE - À AMÉLIORER ⚠️
+*/
+
+.ingredient-input {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.ingredient-input-field {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  /* TODO: Améliorer le style du champ (border-radius, box-shadow) */
+  /* TODO: Ajouter une transition sur le focus */
+}
+
+.ingredient-input-field:focus {
+  outline: none;
+  border-color: #666;
+  /* TODO: Améliorer l'effet de focus (couleur, ombre) */
+}
+
+.add-button {
+  padding: 10px 20px;
+  background: #4CAF50;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  /* TODO: Ajouter border-radius */
+  /* TODO: Améliorer les couleurs */
+  /* TODO: Ajouter une transition sur le hover */
+}
+
+.add-button:hover {
+  background: #45a049;
+  /* TODO: Ajouter un effet plus marqué (transform, box-shadow) */
+}
+
+.add-button:active {
+  /* TODO: Ajouter un effet au clic (transform: scale) */
+}
+
+/* TODO: Ajouter des styles pour les suggestions d'ingrédients (bonus) */
+/* TODO: Rendre responsive pour mobile */
+

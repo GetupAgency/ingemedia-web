@@ -5,6 +5,7 @@ import ModulePage from './pages/ModulePage';
 import ExercicePage from './pages/ExercicePage';
 import CompetencesPage from './pages/CompetencesPage';
 import LexiquePage from './pages/LexiquePage';
+import GFaimPage from './pages/GFaimPage';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import './App.css';
@@ -21,6 +22,7 @@ function App() {
             <Route path="/exercice/:exerciceId" element={<ExercicePage />} />
             <Route path="/competences" element={<CompetencesPage />} />
             <Route path="/lexique" element={<LexiquePage />} />
+            <Route path="/gfaim" element={<GFaimPage />} />
           </Routes>
         </main>
         <Footer />

@@ -1,0 +1,102 @@
+/* 
+  ⚠️ STYLES DE BASE - À AMÉLIORER ⚠️
+*/
+
+.recipe-card {
+  background: white;
+  border: 1px solid #ddd;
+  padding: 15px;
+  cursor: pointer;
+  /* TODO: Ajouter border-radius */
+  /* TODO: Ajouter une box-shadow */
+  /* TODO: Ajouter une transition pour les animations */
+}
+
+.recipe-card:hover {
+  border-color: #999;
+  /* TODO: Ajouter un effet de hover marqué (transform, shadow) */
+}
+
+.recipe-card.selected {
+  border-color: #ff6b6b;
+  /* TODO: Améliorer l'indicateur de sélection */
+}
+
+.recipe-image {
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.emoji-image {
+  font-size: 50px;
+  /* TODO: Remplacer par de vraies images (bonus) */
+}
+
+.recipe-name {
+  font-size: 18px;
+  color: #333;
+  margin-bottom: 10px;
+  /* TODO: Améliorer la typographie */
+}
+
+.recipe-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  font-size: 13px;
+  color: #666;
+  /* TODO: Améliorer le style des infos */
+}
+
+.recipe-difficulty {
+  padding: 4px 8px;
+  background: #f0f0f0;
+  text-transform: capitalize;
+  /* TODO: Ajouter border-radius */
+  /* TODO: Colorier selon la difficulté (vert=facile, orange=moyen, rouge=difficile) */
+}
+
+.recipe-time {
+  /* TODO: Ajouter du style */
+}
+
+.recipe-ingredients {
+  margin-top: 15px;
+}
+
+.ingredients-title {
+  font-weight: bold;
+  font-size: 14px;
+  margin-bottom: 8px;
+  color: #444;
+  /* TODO: Améliorer le style du titre */
+}
+
+.ingredients-list {
+  list-style: none;
+  padding: 0;
+  font-size: 13px;
+}
+
+.ingredients-list li {
+  padding: 4px 0;
+}
+
+.has-ingredient {
+  color: #4CAF50;
+  /* TODO: Améliorer le style (icône, fond coloré) */
+}
+
+.missing-ingredient {
+  color: #f44336;
+  opacity: 0.6;
+  /* TODO: Améliorer le style */
+}
+
+/* TODO: Ajouter une barre de progression de correspondance */
+/* TODO: Ajouter des badges (végétarien, rapide, etc.) */
+/* TODO: Améliorer la présentation générale */
+/* TODO: Ajouter des animations @keyframes pour l'apparition */
+/* TODO: Créer une modal pour afficher la recette complète (bonus) */
+

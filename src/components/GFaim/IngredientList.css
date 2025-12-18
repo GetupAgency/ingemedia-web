@@ -1,0 +1,63 @@
+/* 
+  ⚠️ STYLES DE BASE - À AMÉLIORER ⚠️
+*/
+
+.ingredient-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.ingredient-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #e0e0e0;
+  padding: 8px 15px;
+  /* TODO: Ajouter border-radius pour faire des pills/badges */
+  /* TODO: Améliorer les couleurs (gradient, bordure colorée) */
+  /* TODO: Ajouter une ombre légère */
+}
+
+.ingredient-name {
+  font-size: 14px;
+  color: #333;
+  text-transform: capitalize;
+  /* TODO: Améliorer la typographie */
+}
+
+.remove-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  opacity: 0.5;
+  /* TODO: Ajouter une transition smooth */
+}
+
+.remove-button:hover {
+  opacity: 1;
+  /* TODO: Ajouter un effet au hover (transform, couleur) */
+}
+
+.no-ingredients {
+  text-align: center;
+  padding: 40px 20px;
+  color: #888;
+}
+
+.no-ingredients p:first-child {
+  font-size: 18px;
+  margin-bottom: 8px;
+  /* TODO: Améliorer le style du texte */
+}
+
+.help-text {
+  font-size: 14px;
+  /* TODO: Améliorer la couleur et le style */
+}
+
+/* TODO: Ajouter des animations @keyframes pour l'apparition/disparition */
+/* TODO: Améliorer le design général des badges */
+/* TODO: Ajouter un compteur d'ingrédients stylisé */
+

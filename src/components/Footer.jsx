@@ -51,8 +51,8 @@ function Footer() {
             <p>&copy; 2025 - Tous droits réservés</p>
           </div>
           <div className="footer-version">
-            <span className="version-badge">Version 1.2.0</span>
-            <span className="version-date">Mise à jour le 21/11/2025 à 17:30</span>
+            <span className="version-badge">Version 1.3.0</span>
+            <span className="version-date">Mise à jour le 18/12/2025 à 22:45</span>
           </div>
         </div>
       </div>

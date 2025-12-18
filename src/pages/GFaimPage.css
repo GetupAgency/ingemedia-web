@@ -1,0 +1,66 @@
+/* 
+  ⚠️ CSS DE BASE - À AMÉLIORER PAR LES ÉTUDIANTS ⚠️
+  
+  Améliorations suggérées :
+  - Améliorer les couleurs et contrastes
+  - Ajouter des ombres et des effets
+  - Rendre responsive (mobile-first)
+  - Ajouter des animations
+  - Améliorer la typographie
+  - Ajouter un mode sombre (bonus)
+*/
+
+.gfaim-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.gfaim-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.gfaim-header h1 {
+  font-size: 2.5rem;
+  color: #333;
+  margin-bottom: 10px;
+  /* TODO: Ajouter un dégradé de couleur ou une ombre de texte */
+}
+
+.subtitle {
+  font-size: 1rem;
+  color: #666;
+  /* TODO: Améliorer la couleur et la taille */
+}
+
+.gfaim-container {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 20px;
+  /* TODO: Rendre responsive avec @media queries */
+}
+
+.ingredients-section,
+.recipes-section {
+  background: #f9f9f9;
+  padding: 15px;
+  border: 1px solid #ddd;
+  /* TODO: Améliorer les bordures, ajouter des ombres */
+  /* TODO: Ajouter un border-radius pour arrondir les coins */
+}
+
+.ingredients-section h2,
+.recipes-section h2 {
+  font-size: 1.3rem;
+  margin-bottom: 15px;
+  color: #444;
+  /* TODO: Ajouter une bordure en bas ou un accent coloré */
+  /* TODO: Améliorer la typographie (font-weight, letter-spacing) */
+}
+
+/* TODO: Ajouter des animations au hover */
+/* TODO: Ajouter des transitions sur les changements */
+/* TODO: Améliorer la palette de couleurs générale */
+/* TODO: Ajouter des effets visuels (dégradés, ombres portées) */
+

@@ -52,6 +52,14 @@ function Header() {
             <span className="nav-icon">📖</span>
             Lexique
           </Link>
+          <Link 
+            to="/gfaim" 
+            className={`nav-link ${isActive('/gfaim') ? 'active' : ''}`}
+            onClick={() => setMobileMenuOpen(false)}
+          >
+            <span className="nav-icon">🍽️</span>
+            G Faim
+          </Link>
         </nav>
       </div>
     </header>

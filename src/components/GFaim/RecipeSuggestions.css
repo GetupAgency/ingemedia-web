@@ -1,0 +1,38 @@
+/* 
+  ⚠️ STYLES DE BASE - À AMÉLIORER ⚠️
+*/
+
+.recipe-suggestions {
+  min-height: 300px;
+}
+
+.recipes-count {
+  margin-bottom: 15px;
+  color: #666;
+  font-size: 14px;
+  /* TODO: Améliorer le style du compteur */
+}
+
+.recipes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 15px;
+  /* TODO: Améliorer le responsive (mobile, tablette) */
+}
+
+.no-recipes {
+  text-align: center;
+  padding: 50px 20px;
+  color: #999;
+}
+
+.no-recipes p:first-child {
+  font-size: 20px;
+  margin-bottom: 10px;
+  /* TODO: Améliorer le style */
+}
+
+/* TODO: Ajouter des animations pour l'apparition des cartes */
+/* TODO: Ajouter un effet de chargement (skeleton) */
+/* TODO: Améliorer la disposition sur mobile */
+
