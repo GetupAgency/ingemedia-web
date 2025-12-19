@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Introduction à JavaScript - À compléter</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      padding: 20px;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 20px;
+      padding: 40px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    }
+
+    h1 {
+      color: #667eea;
+      text-align: center;
+      margin-bottom: 10px;
+      font-size: 2.5rem;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #666;
+      margin-bottom: 40px;
+      font-size: 1.1rem;
+    }
+
+    .section {
+      background: #f8f9fa;
+      padding: 25px;
+      margin-bottom: 25px;
+      border-radius: 12px;
+      border-left: 5px solid #667eea;
+    }
+
+    .section h2 {
+      color: #333;
+      margin-bottom: 15px;
+      font-size: 1.5rem;
+    }
+
+    .section p {
+      color: #555;
+      margin-bottom: 15px;
+      line-height: 1.6;
+    }
+
+    button {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      padding: 12px 25px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: bold;
+      transition: all 0.3s ease;
+      margin: 5px;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+    }
+
+    button:active {
+      transform: translateY(0);
+    }
+
+    input[type="text"],
+    input[type="number"] {
+      padding: 12px;
+      border: 2px solid #ddd;
+      border-radius: 8px;
+      font-size: 16px;
+      width: 100%;
+      margin-bottom: 10px;
+      transition: border-color 0.3s;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: #667eea;
+    }
+
+    .result-box {
+      background: #e3f2fd;
+      padding: 15px;
+      border-radius: 8px;
+      margin-top: 15px;
+      border-left: 4px solid #2196f3;
+      display: none;
+    }
+
+    .result-box.show {
+      display: block;
+    }
+
+    .result-box h3 {
+      color: #1976d2;
+      margin-bottom: 10px;
+    }
+
+    .result-box p {
+      color: #333;
+      margin: 5px 0;
+    }
+
+    #clickCounter {
+      background: #fff3cd;
+      padding: 20px;
+      border-radius: 8px;
+      text-align: center;
+      margin-top: 15px;
+    }
+
+    #clickCount {
+      font-size: 48px;
+      font-weight: bold;
+      color: #856404;
+    }
+
+    .demo-box {
+      background: white;
+      padding: 20px;
+      border: 2px dashed #667eea;
+      border-radius: 8px;
+      margin: 15px 0;
+      text-align: center;
+      min-height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .color-box {
+      width: 100px;
+      height: 100px;
+      background: #667eea;
+      border-radius: 8px;
+      margin: 10px auto;
+      transition: all 0.3s ease;
+    }
+
+    .info-badge {
+      background: #e7f3ff;
+      color: #0066cc;
+      padding: 5px 10px;
+      border-radius: 5px;
+      font-size: 14px;
+      font-weight: bold;
+      display: inline-block;
+      margin: 5px 0;
+    }
+
+    code {
+      background: #f1f1f1;
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-family: 'Courier New', monospace;
+      color: #d73a49;
+      font-size: 14px;
+    }
+
+    .console-hint {
+      background: #fff3e0;
+      padding: 15px;
+      border-radius: 8px;
+      margin: 15px 0;
+      border-left: 4px solid #ff9800;
+    }
+
+    .console-hint strong {
+      color: #e65100;
+    }
+
+    .grid-buttons {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 10px;
+      margin-top: 15px;
+    }
+
+    .footer-intro {
+      text-align: center;
+      margin-top: 30px;
+      padding-top: 20px;
+      border-top: 2px solid #eee;
+      color: #666;
+    }
+
+    .todo-badge {
+      background: #ff9800;
+      color: white;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: bold;
+      margin-left: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🚀 Introduction à JavaScript</h1>
+    <p class="subtitle">À toi de jouer ! Complète les fonctions JavaScript !</p>
+
+    <div class="console-hint">
+      <strong>💡 Instructions :</strong> Complète les fonctions JavaScript en dessous. 
+      Ouvre la console (F12) pour tester et déboguer ton code !
+    </div>
+
+    <!-- Section 1 : Alert et Prompt -->
+    <div class="section">
+      <h2>1️⃣ Alert et Prompt <span class="todo-badge">TODO</span></h2>
+      <p>Les fonctions <code>alert()</code> et <code>prompt()</code> permettent d'interagir avec l'utilisateur.</p>
+      
+      <button onclick="afficherAlert()">🔔 Afficher un Alert</button>
+      <button onclick="demanderNom()">💬 Demander ton nom (Prompt)</button>
+      <button onclick="demanderAge()">🎂 Calculer ton année de naissance</button>
+      
+      <div id="resultatNom" class="result-box">
+        <h3>Résultat :</h3>
+        <p id="texteNom"></p>
+      </div>
+    </div>
+
+    <!-- Section 2 : Console.log -->
+    <div class="section">
+      <h2>2️⃣ Console.log <span class="todo-badge">TODO</span></h2>
+      <p>La fonction <code>console.log()</code> affiche des messages dans la console du navigateur (F12).</p>
+      
+      <div class="grid-buttons">
+        <button onclick="afficherDansConsole()">📝 Message simple</button>
+        <button onclick="afficherVariable()">🔢 Afficher une variable</button>
+        <button onclick="afficherCalcul()">➕ Afficher un calcul</button>
+        <button onclick="afficherTableau()">📊 Afficher un tableau</button>
+      </div>
+      
+      <div class="console-hint">
+        Regarde dans la console (F12) pour voir les résultats ! 👀
+      </div>
+    </div>
+
+    <!-- Section 3 : Sélecteurs DOM -->
+    <div class="section">
+      <h2>3️⃣ Sélecteurs DOM <span class="todo-badge">TODO</span></h2>
+      <p>Utilise <code>document.querySelector()</code> pour sélectionner et modifier des éléments.</p>
+      
+      <div id="demoBox" class="demo-box">
+        <p>Je suis une boîte de démonstration</p>
+      </div>
+      
+      <div class="grid-buttons">
+        <button onclick="changerTexte()">✏️ Changer le texte</button>
+        <button onclick="changerCouleur()">🎨 Changer la couleur</button>
+        <button onclick="ajouterElement()">➕ Ajouter un élément</button>
+        <button onclick="resetBox()">🔄 Réinitialiser</button>
+      </div>
+    </div>
+
+    <!-- Section 4 : Input et récupération de valeurs -->
+    <div class="section">
+      <h2>4️⃣ Récupérer des valeurs depuis des inputs <span class="todo-badge">TODO</span></h2>
+      <p>Utilise <code>input.value</code> pour récupérer ce que l'utilisateur tape.</p>
+      
+      <input type="text" id="prenomInput" placeholder="Entre ton prénom">
+      <input type="number" id="ageInput" placeholder="Entre ton âge">
+      
+      <button onclick="afficherInfos()">✅ Afficher mes infos</button>
+      
+      <div id="resultatInfos" class="result-box">
+        <h3>Tes informations :</h3>
+        <p id="texteInfos"></p>
+      </div>
+    </div>
+
+    <!-- Section 5 : Compteur (événements) -->
+    <div class="section">
+      <h2>5️⃣ Compteur <span class="todo-badge">TODO</span></h2>
+      <p>Clique sur les boutons pour incrémenter ou décrémenter le compteur.</p>
+      
+      <div id="clickCounter">
+        <div id="clickCount">0</div>
+        <div style="margin-top: 20px;">
+          <button onclick="incrementer()">➕ Ajouter 1</button>
+          <button onclick="decrementer()">➖ Retirer 1</button>
+          <button onclick="reinitialiser()">🔄 Réinitialiser</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 6 : Conditions -->
+    <div class="section">
+      <h2>6️⃣ Conditions <span class="todo-badge">TODO</span></h2>
+      <p>Les conditions <code>if/else</code> permettent d'exécuter du code selon des critères.</p>
+      
+      <input type="number" id="nombreInput" placeholder="Entre un nombre">
+      <button onclick="testerNombre()">🔍 Tester le nombre</button>
+      
+      <div id="resultatTest" class="result-box">
+        <h3>Résultat du test :</h3>
+        <p id="texteTest"></p>
+      </div>
+    </div>
+
+    <!-- Section 7 : Boucles -->
+    <div class="section">
+      <h2>7️⃣ Boucles <span class="todo-badge">TODO</span></h2>
+      <p>Les boucles <code>for</code> permettent de répéter du code plusieurs fois.</p>
+      
+      <button onclick="creerListe()">📝 Créer une liste (boucle for)</button>
+      <button onclick="creerCarres()">🟦 Créer des carrés colorés</button>
+      
+      <div id="conteneurListe"></div>
+    </div>
+
+    <!-- Section 8 : Changement de style -->
+    <div class="section">
+      <h2>8️⃣ Modifier les styles CSS <span class="todo-badge">TODO</span></h2>
+      <p>Change les propriétés CSS avec JavaScript.</p>
+      
+      <div class="color-box" id="colorBox"></div>
+      
+      <div class="grid-buttons">
+        <button onclick="changerCouleurAleatoire()">🎨 Couleur aléatoire</button>
+        <button onclick="agrandirBox()">🔼 Agrandir</button>
+        <button onclick="retrecirBox()">🔽 Rétrécir</button>
+        <button onclick="faireRotation()">🔄 Rotation</button>
+      </div>
+    </div>
+
+    <!-- Section 9 : Mini jeu -->
+    <div class="section">
+      <h2>9️⃣ Mini-jeu - Devine le nombre ! <span class="todo-badge">TODO</span></h2>
+      <p>J'ai choisi un nombre entre 1 et 100. Essaie de le deviner !</p>
+      
+      <input type="number" id="devinette" placeholder="Entre ton nombre" min="1" max="100">
+      <button onclick="devinerNombre()">🎯 Deviner</button>
+      <button onclick="nouveauJeu()">🔄 Nouveau jeu</button>
+      
+      <div id="resultatJeu" class="result-box">
+        <h3>Indice :</h3>
+        <p id="texteJeu"></p>
+        <p id="tentatives"></p>
+      </div>
+    </div>
+
+    <div class="footer-intro">
+      <p>🎓 <strong>Bon courage !</strong> Utilise la console (F12) pour déboguer.</p>
+      <p>💡 Astuce : Commence par les fonctions simples et progresse petit à petit !</p>
+    </div>
+  </div>
+<script src="intro-javascript-ETUDIANT.js"></script>
+
+  <script>
+    // ============================================
+    // SECTION 1 : Alert et Prompt
+    // ============================================
+
+    function afficherAlert() {
+      // TODO: Affiche un message avec alert()
+      // Exemple : alert('Ton message ici');
+      alert('bonjour');
+      // VOTRE CODE ICI
+      
+    }
+
+    function demanderNom() {
+      // TODO: 
+      // 1. Utilise prompt() pour demander le nom
+      // 2. Sélectionne l'élément #texteNom avec querySelector
+      // 3. Change son textContent pour afficher "Bonjour [nom]"
+      // 4. Affiche la div #resultatNom en ajoutant la classe 'show'
+      
+      // VOTRE CODE ICI
+    
+    /*    var test = [2, 3, 4,8,9,10];
+        for(var i = 0; i < test.length; i++){
+          if(test[i] % 2 === 0){
+          alert(test[i]);
+        }
+      }*/
+
+      var chien = {
+        nom: "Max",
+        age: 300,
+        race: "labrador",
+        couleur: "noir",
+        taille: 100,
+        poids: 30,
+      };
+      // une ligne
+
+      /*
+eziozjoiejioz
+dejkzdizuzehud
+usbezyxzyxhuzihzi
+xzauxhuizah
+      */
+      var IMC = chien.poids / (chien.taille * chien.taille);
+      if(IMC > 20){
+        alert("mon chien est en surpoids de " + (IMC - 20));
+      }
+      else{
+        alert("mon chien est en souspoids de " + (20 - IMC));
+      }
+
+      alert("mon chien s'appelle " + chien.nom + " et il a " + chien.age + " ans");
+
+      }
+
+      
+
+    function demanderAge() {
+      /* TODO:
+      // 1. Demande l'âge avec prompt()
+      // 2. Convertis en nombre avec parseInt()
+      // 3. Calcule l'année de naissance (2025 - age)
+      // 4. Affiche le résultat avec alert()
+      zfoi(eio'fjio(e'içà))
+      // VOTRE CODE ICI
+      */
+      
+    }
+
+    // ============================================
+    // SECTION 2 : Console.log
+    // ============================================
+
+    function afficherDansConsole() {
+      // TODO: Affiche un message dans la console avec console.log()
+      
+      // VOTRE CODE ICI
+      
+    }
+
+    function afficherVariable() {
+      // TODO:
+      // 1. Crée des variables (const message, const nombre, etc.)
+      // 2. Affiche-les dans la console avec console.log()
+      // 3. Affiche aussi leur type avec typeof
+      
+      // VOTRE CODE ICI
+      
+    }
+
+    function afficherCalcul() {
+      // TODO:
+      // 1. Crée deux variables a et b avec des nombres
+      // 2. Affiche les résultats de a+b, a-b, a*b, a/b dans la console
+      
+      // VOTRE CODE ICI
+      
+    }
+
+    function afficherTableau() {
+      // TODO:
+      // 1. Crée un tableau avec des fruits
+      // 2. Affiche le tableau avec console.log()
+      // 3. Affiche le premier élément (fruits[0])
+      // 4. Affiche la longueur avec .length
+      
+      // VOTRE CODE ICI
+      
+    }
+
+    // ============================================
+    // SECTION 3 : Sélecteurs DOM
+    // ============================================
+
+    function changerTexte() {
+      // TODO:
+      // 1. Sélectionne l'élément <p> dans #demoBox avec querySelector
+      // 2. Change son textContent
+      
+      // VOTRE CODE ICI
+      
+    }
+
+    function changerCouleur() {
+      // TODO:
+      // 1. Sélectionne #demoBox
+      // 2. Change son style.backgroundColor et style.color
+      
+      // VOTRE CODE ICI
+      
+    }
+
+    function ajouterElement() {
+      // TODO:
+      // 1. Crée un nouvel élément <p> avec createElement('p')
+      // 2. Définis son textContent
+      // 3. Ajoute-le à #demoBox avec appendChild()
+      
+      // VOTRE CODE ICI
+      
+    }
+
+    function resetBox() {
+      // TODO:
+      // 1. Sélectionne #demoBox
+      // 2. Réinitialise son innerHTML
+      // 3. Retire les styles personnalisés
+      
+      // VOTRE CODE ICI
+      
+    }
+
+    // ============================================
+    // SECTION 4 : Inputs
+    // ============================================
+
+    function afficherInfos() {
+      // TODO:
+      // 1. Récupère les valeurs des inputs avec .value
+      // 2. Vérifie qu'ils ne sont pas vides
+      // 3. Affiche les infos dans #texteInfos
+      // 4. Affiche la div #resultatInfos
+      
+      const prenom = document.querySelector('#prenomInput').value;
+      const age = document.querySelector('#ageInput').value;
+      
+      if (prenom && age) {
+        const resultat = document.querySelector('#resultatInfos');
+        const texte = document.querySelector('#texteInfos');
+        
+        texte.innerHTML = `
+          👤 <strong>Prénom :</strong> ${prenom}<br>
+          🎂 <strong>Âge :</strong> ${age} ans<br>
+          📅 <strong>Tu seras majeur en :</strong> ${age >= 18 ? 'Tu es déjà majeur !' : (2025 + (18 - age))}
+        `;
+        resultat.classList.add('show');
+        
+        console.log('Prénom :', prenom);
+        console.log('Âge :', age);
+      } else {
+        alert('⚠️ Remplis les deux champs !');
+      }
+    }
+
+    // ============================================
+    // SECTION 5 : Compteur (État)
+    // ============================================
+// variable globale compteur
+let compteur = 0;
+
+function incrementer() {
+  // on augmente la valeur du compteur
+  compteur++;
+
+  // on met à jour l'affichage
+  mettreAJourCompteur();
+}
+
+function decrementer() {
+  // on vérifie que le compteur ne descend pas en dessous de 0
+  if (compteur > 0) {
+    compteur--;
+  }
+
+  // on met à jour l'affichage
+  mettreAJourCompteur();
+}
+
+function reinitialiser() {
+  // on remet le compteur à zéro
+  compteur = 0;
+
+  // on met à jour l'affichage
+  mettreAJourCompteur();
+}
+
+function mettreAJourCompteur() {
+  // on sélectionne l'élément HTML qui affiche le compteur
+  const elementCompteur = document.querySelector("#clickCount");
+
+  // on met à jour le texte avec la valeur du compteur
+  elementCompteur.textContent = compteur;
+}
+
+
+    // ============================================
+    // SECTION 6 : Conditions
+    // ============================================
+
+    function testerNombre() {
+      // TODO:
+      // 1. Récupère la valeur de #nombreInput et convertis en nombre (parseInt)
+      // 2. Teste le nombre avec des if/else if/else
+      // 3. Affiche un message selon le résultat dans #texteTest
+      // 4. Teste aussi si le nombre est pair ou impair (nombre % 2 === 0)
+      
+      // VOTRE CODE ICI
+      
+    }
+
+    // ============================================
+    // SECTION 7 : Boucles
+    // ============================================
+
+    function creerListe() {
+      // TODO:
+      // 1. Sélectionne #conteneurListe
+      // 2. Crée un élément <ul>
+      // 3. Utilise une boucle for pour créer 5 <li>
+      // 4. Ajoute chaque <li> au <ul> avec appendChild()
+      // 5. Ajoute le <ul> au conteneur
+      
+      // VOTRE CODE ICI
+      
+    }
+
+    function creerCarres() {
+      // TODO:
+      // 1. Crée un tableau de couleurs
+      // 2. Utilise une boucle for pour parcourir le tableau
+      // 3. Pour chaque couleur, crée un <div> avec la couleur de fond
+      // 4. Ajoute les divs au #conteneurListe
+      
+      // VOTRE CODE ICI
+      
+    }
+
+    // ============================================
+    // SECTION 8 : Styles dynamiques
+    // ============================================
+
+    function changerCouleurAleatoire() {
+      // TODO:
+      // 1. Génère 3 nombres aléatoires entre 0 et 255
+      //    Utilise : Math.floor(Math.random() * 256)
+      // 2. Crée une couleur rgb : `rgb(${r}, ${g}, ${b})`
+      // 3. Change le backgroundColor de #colorBox
+      
+      // VOTRE CODE ICI
+      
+    }
+
+    function agrandirBox() {
+      // TODO:
+      // 1. Sélectionne #colorBox
+      // 2. Augmente sa width et height de 20px
+      
+      // VOTRE CODE ICI
+      
+    }
+
+    function retrecirBox() {
+      // TODO:
+      // 1. Sélectionne #colorBox
+      // 2. Diminue sa width et height de 20px (si > 40px)
+      
+      // VOTRE CODE ICI
+      
+    }
+
+    function faireRotation() {
+      // TODO:
+      // 1. Sélectionne #colorBox
+      // 2. Change son style.transform à 'rotate(45deg)'
+      // 3. Bonus : Utilise setTimeout() pour revenir à 0deg après 1 seconde
+      
+      // VOTRE CODE ICI
+      
+    }
+
+    // ============================================
+    // SECTION 9 : Mini-jeu (CHALLENGE !)
+    // ============================================
+
+    // TODO: Crée les variables globales
+    // let nombreSecret = Math.floor(Math.random() * 100) + 1;
+    // let tentativesJeu = 0;
+
+    function devinerNombre() {
+      // TODO:
+      // 1. Récupère la valeur de #devinette et convertis en nombre
+      // 2. Incrémente tentativesJeu
+      // 3. Compare avec nombreSecret
+      // 4. Affiche un message selon le résultat :
+      //    - Si égal : "Bravo !"
+      //    - Si plus petit : "C'est plus grand"
+      //    - Si plus grand : "C'est plus petit"
+      // 5. Affiche le nombre de tentatives
+      
+      // VOTRE CODE ICI
+      
+    }
+
+    function nouveauJeu() {
+      // TODO:
+      // 1. Génère un nouveau nombreSecret
+      // 2. Réinitialise tentativesJeu à 0
+      // 3. Vide l'input #devinette
+      // 4. Cache #resultatJeu
+      
+      // VOTRE CODE ICI
+      
+    }
+
+    // ============================================
+    // INITIALISATION
+    // ============================================
+
+    // Message de bienvenue dans la console
+    console.log('%c🚀 Bienvenue dans l\'introduction à JavaScript !', 'color: #667eea; font-size: 20px; font-weight: bold;');
+    console.log('%c👉 À toi de compléter les fonctions !', 'color: #764ba2; font-size: 14px;');
+    console.log('');
+    console.log('💡 Astuce : Commence par les fonctions simples et utilise console.log() pour déboguer');
+    console.log('');
+  </script>
+</body>
+</html>
+

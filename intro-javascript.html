@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Introduction à JavaScript - Les Bases</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      padding: 20px;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 20px;
+      padding: 40px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    }
+
+    h1 {
+      color: #667eea;
+      text-align: center;
+      margin-bottom: 10px;
+      font-size: 2.5rem;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #666;
+      margin-bottom: 40px;
+      font-size: 1.1rem;
+    }
+
+    .section {
+      background: #f8f9fa;
+      padding: 25px;
+      margin-bottom: 25px;
+      border-radius: 12px;
+      border-left: 5px solid #667eea;
+    }
+
+    .section h2 {
+      color: #333;
+      margin-bottom: 15px;
+      font-size: 1.5rem;
+    }
+
+    .section p {
+      color: #555;
+      margin-bottom: 15px;
+      line-height: 1.6;
+    }
+
+    button {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      padding: 12px 25px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: bold;
+      transition: all 0.3s ease;
+      margin: 5px;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+    }
+
+    button:active {
+      transform: translateY(0);
+    }
+
+    input[type="text"],
+    input[type="number"] {
+      padding: 12px;
+      border: 2px solid #ddd;
+      border-radius: 8px;
+      font-size: 16px;
+      width: 100%;
+      margin-bottom: 10px;
+      transition: border-color 0.3s;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: #667eea;
+    }
+
+    .result-box {
+      background: #e3f2fd;
+      padding: 15px;
+      border-radius: 8px;
+      margin-top: 15px;
+      border-left: 4px solid #2196f3;
+      display: none;
+    }
+
+    .result-box.show {
+      display: block;
+    }
+
+    .result-box h3 {
+      color: #1976d2;
+      margin-bottom: 10px;
+    }
+
+    .result-box p {
+      color: #333;
+      margin: 5px 0;
+    }
+
+    #clickCounter {
+      background: #fff3cd;
+      padding: 20px;
+      border-radius: 8px;
+      text-align: center;
+      margin-top: 15px;
+    }
+
+    #clickCount {
+      font-size: 48px;
+      font-weight: bold;
+      color: #856404;
+    }
+
+    .demo-box {
+      background: white;
+      padding: 20px;
+      border: 2px dashed #667eea;
+      border-radius: 8px;
+      margin: 15px 0;
+      text-align: center;
+      min-height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .color-box {
+      width: 100px;
+      height: 100px;
+      background: #667eea;
+      border-radius: 8px;
+      margin: 10px auto;
+      transition: all 0.3s ease;
+    }
+
+    .info-badge {
+      background: #e7f3ff;
+      color: #0066cc;
+      padding: 5px 10px;
+      border-radius: 5px;
+      font-size: 14px;
+      font-weight: bold;
+      display: inline-block;
+      margin: 5px 0;
+    }
+
+    code {
+      background: #f1f1f1;
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-family: 'Courier New', monospace;
+      color: #d73a49;
+      font-size: 14px;
+    }
+
+    .console-hint {
+      background: #fff3e0;
+      padding: 15px;
+      border-radius: 8px;
+      margin: 15px 0;
+      border-left: 4px solid #ff9800;
+    }
+
+    .console-hint strong {
+      color: #e65100;
+    }
+
+    .grid-buttons {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 10px;
+      margin-top: 15px;
+    }
+
+    .footer-intro {
+      text-align: center;
+      margin-top: 30px;
+      padding-top: 20px;
+      border-top: 2px solid #eee;
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🚀 Introduction à JavaScript</h1>
+    <p class="subtitle">Apprends les bases en interagissant avec cette page !</p>
+
+    <div class="console-hint">
+      <strong>💡 Astuce :</strong> Ouvre la console de ton navigateur (F12 ou clic droit > Inspecter > Console) 
+      pour voir les messages console.log() s'afficher en temps réel !
+    </div>
+
+    <!-- Section 1 : Alert et Prompt -->
+    <div class="section">
+      <h2>1️⃣ Alert et Prompt - Les bases de l'interaction</h2>
+      <p>Les fonctions <code>alert()</code> et <code>prompt()</code> permettent d'interagir avec l'utilisateur.</p>
+      
+      <button onclick="afficherAlert()">🔔 Afficher un Alert</button>
+      <button onclick="demanderNom()">💬 Demander ton nom (Prompt)</button>
+      <button onclick="demanderAge()">🎂 Calculer ton année de naissance</button>
+      
+      <div id="resultatNom" class="result-box">
+        <h3>Résultat :</h3>
+        <p id="texteNom"></p>
+      </div>
+    </div>
+
+    <!-- Section 2 : Console.log -->
+    <div class="section">
+      <h2>2️⃣ Console.log - Afficher dans la console</h2>
+      <p>La fonction <code>console.log()</code> affiche des messages dans la console du navigateur (F12).</p>
+      
+      <div class="grid-buttons">
+        <button onclick="afficherDansConsole()">📝 Message simple</button>
+        <button onclick="afficherVariable()">🔢 Afficher une variable</button>
+        <button onclick="afficherCalcul()">➕ Afficher un calcul</button>
+        <button onclick="afficherTableau()">📊 Afficher un tableau</button>
+      </div>
+      
+      <div class="console-hint">
+        Regarde dans la console (F12) pour voir les résultats ! 👀
+      </div>
+    </div>
+
+    <!-- Section 3 : Sélecteurs DOM -->
+    <div class="section">
+      <h2>3️⃣ Sélecteurs DOM - Manipuler les éléments HTML</h2>
+      <p>Utilise <code>document.querySelector()</code> pour sélectionner et modifier des éléments.</p>
+      
+      <div id="demoBox" class="demo-box">
+        <p>Je suis une boîte de démonstration</p>
+      </div>
+      
+      <div class="grid-buttons">
+        <button onclick="changerTexte()">✏️ Changer le texte</button>
+        <button onclick="changerCouleur()">🎨 Changer la couleur</button>
+        <button onclick="ajouterElement()">➕ Ajouter un élément</button>
+        <button onclick="resetBox()">🔄 Réinitialiser</button>
+      </div>
+    </div>
+
+    <!-- Section 4 : Input et récupération de valeurs -->
+    <div class="section">
+      <h2>4️⃣ Récupérer des valeurs depuis des inputs</h2>
+      <p>Utilise <code>input.value</code> pour récupérer ce que l'utilisateur tape.</p>
+      
+      <input type="text" id="prenomInput" placeholder="Entre ton prénom">
+      <input type="number" id="ageInput" placeholder="Entre ton âge">
+      
+      <button onclick="afficherInfos()">✅ Afficher mes infos</button>
+      
+      <div id="resultatInfos" class="result-box">
+        <h3>Tes informations :</h3>
+        <p id="texteInfos"></p>
+      </div>
+    </div>
+
+    <!-- Section 5 : Compteur (événements) -->
+    <div class="section">
+      <h2>5️⃣ Compteur - Gérer les événements et l'état</h2>
+      <p>Clique sur les boutons pour incrémenter ou décrémenter le compteur.</p>
+      
+      <div id="clickCounter">
+        <div id="clickCount">0</div>
+        <div style="margin-top: 20px;">
+          <button onclick="incrementer()">➕ Ajouter 1</button>
+          <button onclick="decrementer()">➖ Retirer 1</button>
+          <button onclick="reinitialiser()">🔄 Réinitialiser</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 6 : Conditions -->
+    <div class="section">
+      <h2>6️⃣ Conditions - Tester et décider</h2>
+      <p>Les conditions <code>if/else</code> permettent d'exécuter du code selon des critères.</p>
+      
+      <input type="number" id="nombreInput" placeholder="Entre un nombre">
+      <button onclick="testerNombre()">🔍 Tester le nombre</button>
+      
+      <div id="resultatTest" class="result-box">
+        <h3>Résultat du test :</h3>
+        <p id="texteTest"></p>
+      </div>
+    </div>
+
+    <!-- Section 7 : Boucles -->
+    <div class="section">
+      <h2>7️⃣ Boucles - Répéter des actions</h2>
+      <p>Les boucles <code>for</code> permettent de répéter du code plusieurs fois.</p>
+      
+      <button onclick="creerListe()">📝 Créer une liste (boucle for)</button>
+      <button onclick="creerCarres()">🟦 Créer des carrés colorés</button>
+      
+      <div id="conteneurListe"></div>
+    </div>
+
+    <!-- Section 8 : Changement de style -->
+    <div class="section">
+      <h2>8️⃣ Modifier les styles CSS dynamiquement</h2>
+      <p>Change les propriétés CSS avec JavaScript.</p>
+      
+      <div class="color-box" id="colorBox"></div>
+      
+      <div class="grid-buttons">
+        <button onclick="changerCouleurAleatoire()">🎨 Couleur aléatoire</button>
+        <button onclick="agrandirBox()">🔼 Agrandir</button>
+        <button onclick="retrecirBox()">🔽 Rétrécir</button>
+        <button onclick="faireRotation()">🔄 Rotation</button>
+      </div>
+    </div>
+
+    <!-- Section 9 : Mini jeu -->
+    <div class="section">
+      <h2>9️⃣ Mini-jeu - Devine le nombre !</h2>
+      <p>J'ai choisi un nombre entre 1 et 100. Essaie de le deviner !</p>
+      
+      <input type="number" id="devinette" placeholder="Entre ton nombre" min="1" max="100">
+      <button onclick="devinerNombre()">🎯 Deviner</button>
+      <button onclick="nouveauJeu()">🔄 Nouveau jeu</button>
+      
+      <div id="resultatJeu" class="result-box">
+        <h3>Indice :</h3>
+        <p id="texteJeu"></p>
+        <p id="tentatives"></p>
+      </div>
+    </div>
+
+    <div class="footer-intro">
+      <p>🎓 <strong>Bravo !</strong> Tu viens de découvrir les bases de JavaScript.</p>
+      <p>Continue à pratiquer en ouvrant la console (F12) et en explorant le code de cette page !</p>
+    </div>
+  </div>
+
+  <script>
+    // ============================================
+    // SECTION 1 : Alert et Prompt
+    // ============================================
+
+    function afficherAlert() {
+      alert('👋 Bienvenue dans le monde de JavaScript !');
+      console.log('Alert affiché avec succès !');
+    }
+
+    function demanderNom() {
+      // prompt() affiche une boîte de dialogue et retourne ce que l'utilisateur tape
+      const nom = prompt('Comment tu t\'appelles ?');
+      
+      if (nom) {
+        const resultat = document.querySelector('#resultatNom');
+        const texte = document.querySelector('#texteNom');
+        
+        texte.textContent = `Bonjour ${nom} ! Enchanté de te rencontrer ! 👋`;
+        resultat.classList.add('show');
+        
+        console.log('Nom récupéré :', nom);
+      }
+    }
+
+    function demanderAge() {
+      const age = prompt('Quel âge as-tu ?');
+      
+      if (age && !isNaN(age)) {
+        const anneeNaissance = 2025 - parseInt(age);
+        alert(`Tu es né(e) en ${anneeNaissance} ! 🎂`);
+        console.log('Âge :', age, '- Année de naissance :', anneeNaissance);
+      } else {
+        alert('⚠️ Entre un âge valide !');
+      }
+    }
+
+    // ============================================
+    // SECTION 2 : Console.log
+    // ============================================
+
+    function afficherDansConsole() {
+      console.log('🎉 Ceci est un message dans la console !');
+      console.log('Presse F12 pour voir la console du navigateur');
+      alert('✅ Regarde dans la console (F12) !');
+    }
+
+    function afficherVariable() {
+      const message = 'JavaScript est génial !';
+      const nombre = 42;
+      const estVrai = true;
+      
+      console.log('Message :', message);
+      console.log('Nombre :', nombre);
+      console.log('Boolean :', estVrai);
+      console.log('Type de message :', typeof message);
+      console.log('Type de nombre :', typeof nombre);
+      
+      alert('✅ Variables affichées dans la console !');
+    }
+
+    function afficherCalcul() {
+      const a = 10;
+      const b = 5;
+      
+      console.log('--- Calculs ---');
+      console.log(`${a} + ${b} =`, a + b);
+      console.log(`${a} - ${b} =`, a - b);
+      console.log(`${a} * ${b} =`, a * b);
+      console.log(`${a} / ${b} =`, a / b);
+      
+      alert('✅ Résultats affichés dans la console !');
+    }
+
+    function afficherTableau() {
+      const fruits = ['🍎 Pomme', '🍌 Banane', '🍊 Orange', '🍇 Raisin'];
+      
+      console.log('--- Mon tableau de fruits ---');
+      console.log(fruits);
+      console.log('Premier fruit :', fruits[0]);
+      console.log('Nombre de fruits :', fruits.length);
+      
+      // Afficher chaque fruit
+      fruits.forEach((fruit, index) => {
+        console.log(`${index + 1}. ${fruit}`);
+      });
+      
+      alert('✅ Tableau affiché dans la console !');
+    }
+
+    // ============================================
+    // SECTION 3 : Sélecteurs DOM
+    // ============================================
+
+    function changerTexte() {
+      // querySelector() sélectionne un élément par son sélecteur CSS
+      const box = document.querySelector('#demoBox p');
+      box.textContent = '✨ Le texte a été changé avec JavaScript !';
+      console.log('Texte modifié avec querySelector()');
+    }
+
+    function changerCouleur() {
+      const box = document.querySelector('#demoBox');
+      box.style.backgroundColor = '#4CAF50';
+      box.style.color = 'white';
+      box.style.fontWeight = 'bold';
+      console.log('Couleur changée !');
+    }
+
+    function ajouterElement() {
+      const box = document.querySelector('#demoBox');
+      
+      // Créer un nouvel élément
+      const nouveauP = document.createElement('p');
+      nouveauP.textContent = '➕ Nouvel élément ajouté !';
+      nouveauP.style.color = '#e74c3c';
+      
+      // Ajouter l'élément à la box
+      box.appendChild(nouveauP);
+      console.log('Élément ajouté avec createElement() et appendChild()');
+    }
+
+    function resetBox() {
+      const box = document.querySelector('#demoBox');
+      box.innerHTML = '<p>Je suis une boîte de démonstration</p>';
+      box.style.backgroundColor = '';
+      box.style.color = '';
+      console.log('Box réinitialisée');
+    }
+
+    // ============================================
+    // SECTION 4 : Inputs
+    // ============================================
+
+    function afficherInfos() {
+      // Récupérer les valeurs des inputs avec .value
+      const prenom = document.querySelector('#prenomInput').value;
+      const age = document.querySelector('#ageInput').value;
+      
+      if (prenom && age) {
+        const resultat = document.querySelector('#resultatInfos');
+        const texte = document.querySelector('#texteInfos');
+        
+        texte.innerHTML = `
+          👤 <strong>Prénom :</strong> ${prenom}<br>
+          🎂 <strong>Âge :</strong> ${age} ans<br>
+          📅 <strong>Tu seras majeur en :</strong> ${age >= 18 ? 'Tu es déjà majeur !' : (2025 + (18 - age))}
+        `;
+        
+        resultat.classList.add('show');
+        
+        console.log('Prénom :', prenom);
+        console.log('Âge :', age);
+      } else {
+        alert('⚠️ Remplis les deux champs !');
+      }
+    }
+
+    // ============================================
+    // SECTION 5 : Compteur (État)
+    // ============================================
+
+    let compteur = 0;
+
+    function incrementer() {
+      compteur++;
+      mettreAJourCompteur();
+      console.log('Compteur incrémenté :', compteur);
+    }
+
+    function decrementer() {
+      if (compteur > 0) {
+        compteur--;
+        mettreAJourCompteur();
+        console.log('Compteur décrémenté :', compteur);
+      }
+    }
+
+    function reinitialiser() {
+      compteur = 0;
+      mettreAJourCompteur();
+      console.log('Compteur réinitialisé');
+    }
+
+    function mettreAJourCompteur() {
+      document.querySelector('#clickCount').textContent = compteur;
+    }
+
+    // ============================================
+    // SECTION 6 : Conditions
+    // ============================================
+
+    function testerNombre() {
+      const nombre = parseInt(document.querySelector('#nombreInput').value);
+      const resultat = document.querySelector('#resultatTest');
+      const texte = document.querySelector('#texteTest');
+      
+      if (isNaN(nombre)) {
+        texte.textContent = '⚠️ Entre un nombre valide !';
+      } else if (nombre === 0) {
+        texte.textContent = '0️⃣ C\'est zéro !';
+      } else if (nombre > 0 && nombre < 10) {
+        texte.textContent = '✅ Petit nombre positif (entre 1 et 9)';
+      } else if (nombre >= 10 && nombre < 100) {
+        texte.textContent = '🔢 Nombre moyen (entre 10 et 99)';
+      } else if (nombre >= 100) {
+        texte.textContent = '🚀 Grand nombre (100 ou plus) !';
+      } else {
+        texte.textContent = '➖ Nombre négatif';
+      }
+      
+      // Afficher si pair ou impair
+      if (nombre % 2 === 0) {
+        texte.innerHTML += '<br>📊 Ce nombre est <strong>pair</strong>';
+      } else {
+        texte.innerHTML += '<br>📊 Ce nombre est <strong>impair</strong>';
+      }
+      
+      resultat.classList.add('show');
+      console.log('Nombre testé :', nombre);
+    }
+
+    // ============================================
+    // SECTION 7 : Boucles
+    // ============================================
+
+    function creerListe() {
+      const conteneur = document.querySelector('#conteneurListe');
+      conteneur.innerHTML = '<h3>Liste créée avec une boucle for :</h3>';
+      
+      const ul = document.createElement('ul');
+      ul.style.marginTop = '10px';
+      
+      // Boucle for pour créer 5 éléments
+      for (let i = 1; i <= 5; i++) {
+        const li = document.createElement('li');
+        li.textContent = `Élément numéro ${i}`;
+        li.style.padding = '5px';
+        ul.appendChild(li);
+        
+        console.log(`Création de l'élément ${i}`);
+      }
+      
+      conteneur.appendChild(ul);
+    }
+
+    function creerCarres() {
+      const conteneur = document.querySelector('#conteneurListe');
+      conteneur.innerHTML = '<h3>Carrés colorés :</h3>';
+      
+      const wrapper = document.createElement('div');
+      wrapper.style.display = 'flex';
+      wrapper.style.gap = '10px';
+      wrapper.style.flexWrap = 'wrap';
+      wrapper.style.marginTop = '10px';
+      
+      const couleurs = ['#e74c3c', '#3498db', '#2ecc71', '#f39c12', '#9b59b6', '#1abc9c'];
+      
+      for (let i = 0; i < couleurs.length; i++) {
+        const carre = document.createElement('div');
+        carre.style.width = '60px';
+        carre.style.height = '60px';
+        carre.style.backgroundColor = couleurs[i];
+        carre.style.borderRadius = '8px';
+        carre.style.display = 'flex';
+        carre.style.alignItems = 'center';
+        carre.style.justifyContent = 'center';
+        carre.style.color = 'white';
+        carre.style.fontWeight = 'bold';
+        carre.textContent = i + 1;
+        
+        wrapper.appendChild(carre);
+      }
+      
+      conteneur.appendChild(wrapper);
+    }
+
+    // ============================================
+    // SECTION 8 : Styles dynamiques
+    // ============================================
+
+    function changerCouleurAleatoire() {
+      const box = document.querySelector('#colorBox');
+      const r = Math.floor(Math.random() * 256);
+      const g = Math.floor(Math.random() * 256);
+      const b = Math.floor(Math.random() * 256);
+      
+      box.style.backgroundColor = `rgb(${r}, ${g}, ${b})`;
+      console.log(`Couleur aléatoire : rgb(${r}, ${g}, ${b})`);
+    }
+
+    function agrandirBox() {
+      const box = document.querySelector('#colorBox');
+      const tailleActuelle = parseInt(box.style.width) || 100;
+      box.style.width = (tailleActuelle + 20) + 'px';
+      box.style.height = (tailleActuelle + 20) + 'px';
+    }
+
+    function retrecirBox() {
+      const box = document.querySelector('#colorBox');
+      const tailleActuelle = parseInt(box.style.width) || 100;
+      if (tailleActuelle > 40) {
+        box.style.width = (tailleActuelle - 20) + 'px';
+        box.style.height = (tailleActuelle - 20) + 'px';
+      }
+    }
+
+    function faireRotation() {
+      const box = document.querySelector('#colorBox');
+      box.style.transform = 'rotate(45deg)';
+      
+      setTimeout(() => {
+        box.style.transform = 'rotate(0deg)';
+      }, 1000);
+    }
+
+    // ============================================
+    // SECTION 9 : Mini-jeu
+    // ============================================
+
+    let nombreSecret = Math.floor(Math.random() * 100) + 1;
+    let tentativesJeu = 0;
+
+    function devinerNombre() {
+      const essai = parseInt(document.querySelector('#devinette').value);
+      const resultat = document.querySelector('#resultatJeu');
+      const texte = document.querySelector('#texteJeu');
+      const tentativesTexte = document.querySelector('#tentatives');
+      
+      if (isNaN(essai)) {
+        alert('⚠️ Entre un nombre valide !');
+        return;
+      }
+      
+      tentativesJeu++;
+      
+      if (essai === nombreSecret) {
+        texte.textContent = `🎉 Bravo ! Tu as trouvé le nombre ${nombreSecret} !`;
+        texte.style.color = '#27ae60';
+        tentativesTexte.textContent = `En ${tentativesJeu} tentative(s) !`;
+        console.log(`Gagné en ${tentativesJeu} tentatives !`);
+      } else if (essai < nombreSecret) {
+        texte.textContent = '📈 C\'est plus grand !';
+        texte.style.color = '#3498db';
+        tentativesTexte.textContent = `Tentatives : ${tentativesJeu}`;
+      } else {
+        texte.textContent = '📉 C\'est plus petit !';
+        texte.style.color = '#e74c3c';
+        tentativesTexte.textContent = `Tentatives : ${tentativesJeu}`;
+      }
+      
+      resultat.classList.add('show');
+      console.log('Essai :', essai, '- Nombre secret :', nombreSecret);
+    }
+
+    function nouveauJeu() {
+      nombreSecret = Math.floor(Math.random() * 100) + 1;
+      tentativesJeu = 0;
+      document.querySelector('#devinette').value = '';
+      document.querySelector('#resultatJeu').classList.remove('show');
+      console.log('Nouveau jeu ! Nouveau nombre secret :', nombreSecret);
+      alert('🔄 Nouveau jeu ! Bonne chance !');
+    }
+
+    // ============================================
+    // INITIALISATION
+    // ============================================
+
+    // Message de bienvenue dans la console
+    console.log('%c🚀 Bienvenue dans l\'introduction à JavaScript !', 'color: #667eea; font-size: 20px; font-weight: bold;');
+    console.log('%cExplore cette page et regarde comment le code fonctionne !', 'color: #764ba2; font-size: 14px;');
+    console.log('');
+    console.log('💡 Astuce : Tu peux voir le code source de cette page en faisant Ctrl+U (ou Cmd+U sur Mac)');
+    console.log('');
+  </script>
+</body>
+</html>
+

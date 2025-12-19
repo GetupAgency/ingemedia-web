@@ -59,59 +59,14 @@ function RecipeSuggestions({ ingredients, onSelectRecipe, selectedRecipe }) {
     // Calculer un score de correspondance
     // Trier par score décroissant
     
+    // Indices :
+    // 1. Utiliser map() pour ajouter un score à chaque recette
+    // 2. Utiliser filter() et some() pour compter les ingrédients correspondants
+    // 3. Filtrer les recettes avec au moins 1 ingrédient
+    // 4. Trier avec sort() par score décroissant
+    
     // VOTRE CODE ICI
     return RECIPES_DB; // Temporaire : retourne toutes les recettes
-    
-    /* CORRECTION COMMENTÉE :
-    
-    // ÉTAPE 1 : Ajouter un score à chaque recette
-    // map() transforme chaque recette en ajoutant des infos
-    const recipesWithScores = RECIPES_DB.map(recipe => {
-      
-      // Compter combien d'ingrédients de la recette on possède
-      // filter() garde seulement les ingrédients qu'on a
-      const matchingIngredients = recipe.ingredients.filter(recipeIng =>
-        // some() vérifie si AU MOINS UN ingrédient utilisateur correspond
-        ingredients.some(userIng => 
-          // On compare en vérifiant si l'un contient l'autre
-          recipeIng.toLowerCase().includes(userIng) || 
-          userIng.includes(recipeIng.toLowerCase())
-        )
-      );
-      
-      // Calculer les statistiques
-      const matchingCount = matchingIngredients.length; // Nb d'ingrédients qu'on a
-      const totalIngredients = recipe.ingredients.length; // Nb total d'ingrédients
-      const missingCount = totalIngredients - matchingCount; // Nb d'ingrédients manquants
-      
-      // Calculer un score en pourcentage
-      const score = (matchingCount / totalIngredients) * 100;
-      
-      // Retourner la recette avec toutes ses infos d'origine + les nouvelles
-      return {
-        ...recipe, // Spread operator : copie toutes les propriétés de recipe
-        matchingCount,
-        missingCount,
-        score
-      };
-    });
-
-    // ÉTAPE 2 : Filtrer pour garder seulement les recettes avec au moins 1 ingrédient
-    const filtered = recipesWithScores.filter(recipe => recipe.matchingCount > 0);
-    
-    // ÉTAPE 3 : Trier par score décroissant (les meilleurs en premier)
-    const sorted = filtered.sort((a, b) => {
-      // Si les scores sont différents, trier par score
-      if (b.score !== a.score) {
-        return b.score - a.score; // Ordre décroissant
-      }
-      // Si les scores sont égaux, mettre en premier celle avec moins d'ingrédients manquants
-      return a.missingCount - b.missingCount;
-    });
-    
-    return sorted;
-    
-    */
   }, [ingredients]);
 
   if (ingredients.length === 0) {

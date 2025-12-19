@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🎵 Blind Test Musical - CORRECTION (Version Mock)</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .container {
+      max-width: 800px;
+      width: 100%;
+      background: white;
+      border-radius: 30px;
+      padding: 40px;
+      box-shadow: 0 30px 90px rgba(0, 0, 0, 0.3);
+    }
+
+    h1 {
+      text-align: center;
+      color: #667eea;
+      font-size: 3rem;
+      margin-bottom: 10px;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #666;
+      margin-bottom: 30px;
+      font-size: 1.2rem;
+    }
+
+    .correction-badge {
+      background: #2ecc71;
+      color: white;
+      padding: 5px 15px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: bold;
+      display: inline-block;
+      margin-left: 10px;
+    }
+
+    .mock-badge {
+      background: #f39c12;
+      color: white;
+      padding: 5px 15px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: bold;
+      display: inline-block;
+      margin-left: 5px;
+    }
+
+    .info-box {
+      background: #fff3cd;
+      border: 2px solid #ffc107;
+      padding: 15px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .info-box strong {
+      color: #856404;
+    }
+
+    /* Écran de démarrage */
+    .start-screen {
+      text-align: center;
+    }
+
+    .genre-selection {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 15px;
+      margin: 30px 0;
+    }
+
+    .genre-btn {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      padding: 20px;
+      border-radius: 15px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-weight: bold;
+    }
+
+    .genre-btn:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+    }
+
+    .genre-btn:active {
+      transform: translateY(0);
+    }
+
+    /* Écran de jeu */
+    .game-screen {
+      display: none;
+    }
+
+    .game-screen.active {
+      display: block;
+    }
+
+    .game-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 30px;
+      padding: 20px;
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      border-radius: 15px;
+    }
+
+    .score-box, .timer-box, .round-box {
+      text-align: center;
+    }
+
+    .score-box h3, .timer-box h3, .round-box h3 {
+      font-size: 0.9rem;
+      color: #666;
+      margin-bottom: 5px;
+    }
+
+    .score-value, .timer-value, .round-value {
+      font-size: 2rem;
+      font-weight: bold;
+      color: #667eea;
+    }
+
+    .timer-value.warning {
+      color: #e74c3c;
+      animation: blink 1s infinite;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+
+    /* Lecteur audio */
+    .audio-player {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      padding: 40px;
+      border-radius: 20px;
+      text-align: center;
+      margin-bottom: 30px;
+      color: white;
+    }
+
+    .vinyl-container {
+      width: 200px;
+      height: 200px;
+      margin: 0 auto 20px;
+      position: relative;
+    }
+
+    .vinyl {
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(45deg, #1a1a1a 25%, #2d2d2d 25%, #2d2d2d 50%, #1a1a1a 50%, #1a1a1a 75%, #2d2d2d 75%, #2d2d2d);
+      background-size: 20px 20px;
+      border-radius: 50%;
+      border: 3px solid #333;
+      position: relative;
+      animation: spin 2s linear infinite;
+      animation-play-state: paused;
+    }
+
+    .vinyl.playing {
+      animation-play-state: running;
+    }
+
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    .vinyl::before {
+      content: '';
+      position: absolute;
+      width: 60px;
+      height: 60px;
+      background: #667eea;
+      border-radius: 50%;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      border: 2px solid white;
+    }
+
+    .play-btn {
+      background: white;
+      color: #667eea;
+      border: none;
+      padding: 15px 40px;
+      border-radius: 50px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      font-weight: bold;
+      transition: all 0.3s ease;
+      margin-top: 10px;
+    }
+
+    .play-btn:hover {
+      transform: scale(1.1);
+      box-shadow: 0 5px 20px rgba(255, 255, 255, 0.3);
+    }
+
+    /* Zone de réponse */
+    .answer-zone {
+      background: #f8f9fa;
+      padding: 30px;
+      border-radius: 15px;
+      margin-bottom: 20px;
+    }
+
+    .answer-zone h3 {
+      color: #333;
+      margin-bottom: 15px;
+      font-size: 1.3rem;
+    }
+
+    .answer-input {
+      width: 100%;
+      padding: 15px;
+      font-size: 1.1rem;
+      border: 3px solid #ddd;
+      border-radius: 10px;
+      margin-bottom: 15px;
+      transition: border-color 0.3s;
+    }
+
+    .answer-input:focus {
+      outline: none;
+      border-color: #667eea;
+    }
+
+    .submit-btn {
+      background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
+      color: white;
+      border: none;
+      padding: 15px 40px;
+      border-radius: 10px;
+      font-size: 1.1rem;
+      cursor: pointer;
+      font-weight: bold;
+      width: 100%;
+      transition: all 0.3s ease;
+    }
+
+    .submit-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(46, 204, 113, 0.4);
+    }
+
+    .skip-btn {
+      background: #95a5a6;
+      color: white;
+      border: none;
+      padding: 10px 30px;
+      border-radius: 10px;
+      font-size: 1rem;
+      cursor: pointer;
+      margin-top: 10px;
+      width: 100%;
+    }
+
+    /* Feedback */
+    .feedback {
+      padding: 20px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      text-align: center;
+      font-size: 1.2rem;
+      font-weight: bold;
+      display: none;
+    }
+
+    .feedback.show {
+      display: block;
+      animation: slideIn 0.5s ease;
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .feedback.correct {
+      background: #d4edda;
+      color: #155724;
+      border: 2px solid #c3e6cb;
+    }
+
+    .feedback.wrong {
+      background: #f8d7da;
+      color: #721c24;
+      border: 2px solid #f5c6cb;
+    }
+
+    /* Écran de fin */
+    .end-screen {
+      display: none;
+      text-align: center;
+    }
+
+    .end-screen.active {
+      display: block;
+    }
+
+    .final-score {
+      font-size: 4rem;
+      color: #667eea;
+      font-weight: bold;
+      margin: 20px 0;
+    }
+
+    .message {
+      font-size: 1.5rem;
+      color: #666;
+      margin-bottom: 30px;
+    }
+
+    .restart-btn {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      padding: 20px 50px;
+      border-radius: 15px;
+      font-size: 1.3rem;
+      cursor: pointer;
+      font-weight: bold;
+      transition: all 0.3s ease;
+    }
+
+    .restart-btn:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+    }
+
+    /* Loading */
+    .loading {
+      text-align: center;
+      padding: 20px;
+      display: none;
+    }
+
+    .loading.show {
+      display: block;
+    }
+
+    .spinner {
+      border: 4px solid #f3f3f3;
+      border-top: 4px solid #667eea;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      animation: spin-loader 1s linear infinite;
+      margin: 20px auto;
+    }
+
+    @keyframes spin-loader {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🎵 Blind Test Musical <span class="correction-badge">✅ CORRECTION</span><span class="mock-badge">📦 MOCK</span></h1>
+    <p class="subtitle">Version sans API - Fonctionne partout !</p>
+
+    <div class="info-box">
+      <strong>ℹ️ Version Mock</strong><br>
+      Cette version utilise des données simulées au lieu de l'API Deezer.<br>
+      Parfait pour apprendre sans dépendances externes !
+    </div>
+
+    <!-- Écran de démarrage -->
+    <div class="start-screen" id="startScreen">
+      <h2>Choisis un genre musical :</h2>
+      <div class="genre-selection">
+        <button class="genre-btn" onclick="startGame('pop')">🎤 Pop</button>
+        <button class="genre-btn" onclick="startGame('rap')">🎧 Rap</button>
+        <button class="genre-btn" onclick="startGame('rock')">🎸 Rock</button>
+        <button class="genre-btn" onclick="startGame('electro')">⚡ Electro</button>
+      </div>
+    </div>
+
+    <!-- Loading -->
+    <div class="loading" id="loading">
+      <div class="spinner"></div>
+      <p>Chargement des musiques...</p>
+    </div>
+
+    <!-- Écran de jeu -->
+    <div class="game-screen" id="gameScreen">
+      <div class="game-header">
+        <div class="score-box">
+          <h3>Score</h3>
+          <div class="score-value" id="scoreDisplay">0</div>
+        </div>
+        <div class="round-box">
+          <h3>Manche</h3>
+          <div class="round-value" id="roundDisplay">1/10</div>
+        </div>
+        <div class="timer-box">
+          <h3>Temps</h3>
+          <div class="timer-value" id="timerDisplay">30</div>
+        </div>
+      </div>
+
+      <!-- Lecteur audio -->
+      <div class="audio-player">
+        <div class="vinyl-container">
+          <div class="vinyl" id="vinyl"></div>
+        </div>
+        <button class="play-btn" id="playBtn" onclick="togglePlay()">▶️ Jouer</button>
+        <p style="margin-top: 15px; font-size: 0.9rem;">Écoute bien et devine l'artiste !</p>
+      </div>
+
+      <!-- Feedback -->
+      <div class="feedback" id="feedback"></div>
+
+      <!-- Zone de réponse -->
+      <div class="answer-zone">
+        <h3>Qui est l'artiste ?</h3>
+        <input 
+          type="text" 
+          class="answer-input" 
+          id="answerInput" 
+          placeholder="Tape le nom de l'artiste..."
+          onkeypress="handleKeyPress(event)"
+        >
+        <button class="submit-btn" onclick="checkAnswer()">✅ Valider ma réponse</button>
+        <button class="skip-btn" onclick="skipSong()">⏭️ Passer cette chanson</button>
+      </div>
+    </div>
+
+    <!-- Écran de fin -->
+    <div class="end-screen" id="endScreen">
+      <h2>🎉 Partie terminée !</h2>
+      <div class="final-score" id="finalScore">0</div>
+      <p class="message" id="finalMessage">Bravo !</p>
+      <button class="restart-btn" onclick="restartGame()">🔄 Rejouer</button>
+    </div>
+  </div>
+
+  <script>
+    // ============================================
+    // VARIABLES GLOBALES
+    // ============================================
+
+    let score = 0;
+    let currentRound = 0;
+    let totalRounds = 10;
+    let timer = 30;
+    let timerInterval = null;
+    let currentSong = null;
+    let playlist = [];
+    let audioPlayer = new Audio();
+    let selectedGenre = '';
+
+    // ============================================
+    // BASE DE DONNÉES SIMULÉE (remplace l'API Deezer)
+    // ============================================
+
+    const mockDatabase = {
+      pop: [
+        { title: 'Levitating', artist: 'Dua Lipa', preview: 'https://cdns-preview-1.dzcdn.net/stream/c-1d01d5c5e84c66c48f30b3c1d9db1a0b-6.mp3' },
+        { title: 'Shape of You', artist: 'Ed Sheeran', preview: 'https://cdns-preview-0.dzcdn.net/stream/c-0790e668e1c7af472e6c22c5a8e5c84f-6.mp3' },
+        { title: 'Anti-Hero', artist: 'Taylor Swift', preview: 'https://cdns-preview-1.dzcdn.net/stream/c-1c8f3f16e3d6b6e8c8e8f8e8f8e8f8e8-4.mp3' },
+        { title: 'Positions', artist: 'Ariana Grande', preview: 'https://cdns-preview-2.dzcdn.net/stream/c-2f8f3f16e3d6b6e8c8e8f8e8f8e8f8e8-5.mp3' },
+        { title: 'Uptown Funk', artist: 'Bruno Mars', preview: 'https://cdns-preview-3.dzcdn.net/stream/c-3a8f3f16e3d6b6e8c8e8f8e8f8e8f8e8-6.mp3' },
+        { title: 'Blinding Lights', artist: 'The Weeknd', preview: 'https://cdns-preview-4.dzcdn.net/stream/c-4b8f3f16e3d6b6e8c8e8f8e8f8e8f8e8-7.mp3' },
+        { title: 'Sorry', artist: 'Justin Bieber', preview: 'https://cdns-preview-5.dzcdn.net/stream/c-5c8f3f16e3d6b6e8c8e8f8e8f8e8f8e8-8.mp3' },
+        { title: 'Bad Guy', artist: 'Billie Eilish', preview: 'https://cdns-preview-6.dzcdn.net/stream/c-6d8f3f16e3d6b6e8c8e8f8e8f8e8f8e8-9.mp3' },
+        { title: 'Watermelon Sugar', artist: 'Harry Styles', preview: 'https://cdns-preview-7.dzcdn.net/stream/c-7e8f3f16e3d6b6e8c8e8f8e8f8e8f8e8-1.mp3' },
+        { title: 'Hello', artist: 'Adele', preview: 'https://cdns-preview-8.dzcdn.net/stream/c-8f8f3f16e3d6b6e8c8e8f8e8f8e8f8e8-2.mp3' }
+      ],
+      rap: [
+        { title: 'Lose Yourself', artist: 'Eminem', preview: 'https://cdns-preview-9.dzcdn.net/stream/c-9a8f3f16e3d6b6e8c8e8f8e8f8e8f8e8-3.mp3' },
+        { title: 'God\'s Plan', artist: 'Drake', preview: 'https://cdns-preview-1.dzcdn.net/stream/c-1b8f3f16e3d6b6e8c8e8f8e8f8e8f8e8-4.mp3' },
+        { title: 'HUMBLE.', artist: 'Kendrick Lamar', preview: 'https://cdns-preview-2.dzcdn.net/stream/c-2c8f3f16e3d6b6e8c8e8f8e8f8e8f8e8-5.mp3' },
+        { title: 'Circles', artist: 'Post Malone', preview: 'https://cdns-preview-3.dzcdn.net/stream/c-3d8f3f16e3d6b6e8c8e8f8e8f8e8f8e8-6.mp3' },
+        { title: 'SICKO MODE', artist: 'Travis Scott', preview: 'https://cdns-preview-4.dzcdn.net/stream/c-4e8f3f16e3d6b6e8c8e8f8e8f8e8f8e8-7.mp3' },
+        { title: 'Super Bass', artist: 'Nicki Minaj', preview: 'https://cdns-preview-5.dzcdn.net/stream/c-5f8f3f16e3d6b6e8c8e8f8e8f8e8f8e8-8.mp3' },
+        { title: 'WAP', artist: 'Cardi B', preview: 'https://cdns-preview-6.dzcdn.net/stream/c-6g8f3f16e3d6b6e8c8e8f8e8f8e8f8e8-9.mp3' },
+        { title: 'Old Town Road', artist: 'Lil Nas X', preview: 'https://cdns-preview-7.dzcdn.net/stream/c-7h8f3f16e3d6b6e8c8e8f8e8f8e8f8e8-1.mp3' },
+        { title: 'Self Care', artist: 'Mac Miller', preview: 'https://cdns-preview-8.dzcdn.net/stream/c-8i8f3f16e3d6b6e8c8e8f8e8f8e8f8e8-2.mp3' },
+        { title: 'a lot', artist: '21 Savage', preview: 'https://cdns-preview-9.dzcdn.net/stream/c-9j8f3f16e3d6b6e8c8e8f8e8f8e8f8e8-3.mp3' }
+      ],
+      rock: [
+        { title: 'Bohemian Rhapsody', artist: 'Queen', preview: 'https://cdns-preview-1.dzcdn.net/stream/c-1k8f3f16e3d6b6e8c8e8f8e8f8e8f8e8-4.mp3' },
+        { title: 'Hey Jude', artist: 'The Beatles', preview: 'https://cdns-preview-2.dzcdn.net/stream/c-2l8f3f16e3d6b6e8c8e8f8e8f8e8f8e8-5.mp3' },
+        { title: 'Back In Black', artist: 'AC/DC', preview: 'https://cdns-preview-3.dzcdn.net/stream/c-3m8f3f16e3d6b6e8c8e8f8e8f8e8f8e8-6.mp3' },
+        { title: 'Enter Sandman', artist: 'Metallica', preview: 'https://cdns-preview-4.dzcdn.net/stream/c-4n8f3f16e3d6b6e8c8e8f8e8f8e8f8e8-7.mp3' },
+        { title: 'Smells Like Teen Spirit', artist: 'Nirvana', preview: 'https://cdns-preview-5.dzcdn.net/stream/c-5o8f3f16e3d6b6e8c8e8f8e8f8e8f8e8-8.mp3' },
+        { title: 'Californication', artist: 'Red Hot Chili Peppers', preview: 'https://cdns-preview-6.dzcdn.net/stream/c-6p8f3f16e3d6b6e8c8e8f8e8f8e8f8e8-9.mp3' },
+        { title: 'Everlong', artist: 'Foo Fighters', preview: 'https://cdns-preview-7.dzcdn.net/stream/c-7q8f3f16e3d6b6e8c8e8f8e8f8e8f8e8-1.mp3' },
+        { title: 'Do I Wanna Know?', artist: 'Arctic Monkeys', preview: 'https://cdns-preview-8.dzcdn.net/stream/c-8r8f3f16e3d6b6e8c8e8f8e8f8e8f8e8-2.mp3' },
+        { title: 'Supermassive Black Hole', artist: 'Muse', preview: 'https://cdns-preview-9.dzcdn.net/stream/c-9s8f3f16e3d6b6e8c8e8f8e8f8e8f8e8-3.mp3' },
+        { title: 'Boulevard of Broken Dreams', artist: 'Green Day', preview: 'https://cdns-preview-1.dzcdn.net/stream/c-1t8f3f16e3d6b6e8c8e8f8e8f8e8f8e8-4.mp3' }
+      ],
+      electro: [
+        { title: 'Get Lucky', artist: 'Daft Punk', preview: 'https://cdns-preview-2.dzcdn.net/stream/c-2u8f3f16e3d6b6e8c8e8f8e8f8e8f8e8-5.mp3' },
+        { title: 'Summer', artist: 'Calvin Harris', preview: 'https://cdns-preview-3.dzcdn.net/stream/c-3v8f3f16e3d6b6e8c8e8f8e8f8e8f8e8-6.mp3' },
+        { title: 'Titanium', artist: 'David Guetta', preview: 'https://cdns-preview-4.dzcdn.net/stream/c-4w8f3f16e3d6b6e8c8e8f8e8f8e8f8e8-7.mp3' },
+        { title: 'Wake Me Up', artist: 'Avicii', preview: 'https://cdns-preview-5.dzcdn.net/stream/c-5x8f3f16e3d6b6e8c8e8f8e8f8e8f8e8-8.mp3' },
+        { title: 'Animals', artist: 'Martin Garrix', preview: 'https://cdns-preview-6.dzcdn.net/stream/c-6y8f3f16e3d6b6e8c8e8f8e8f8e8f8e8-9.mp3' },
+        { title: 'Alone', artist: 'Marshmello', preview: 'https://cdns-preview-7.dzcdn.net/stream/c-7z8f3f16e3d6b6e8c8e8f8e8f8e8f8e8-1.mp3' },
+        { title: 'Firestone', artist: 'Kygo', preview: 'https://cdns-preview-8.dzcdn.net/stream/c-8a8f3f16e3d6b6e8c8e8f8e8f8e8f8e8-2.mp3' },
+        { title: 'Closer', artist: 'The Chainsmokers', preview: 'https://cdns-preview-9.dzcdn.net/stream/c-9b8f3f16e3d6b6e8c8e8f8e8f8e8f8e8-3.mp3' },
+        { title: 'Adagio for Strings', artist: 'Tiësto', preview: 'https://cdns-preview-1.dzcdn.net/stream/c-1c8f3f16e3d6b6e8c8e8f8e8f8e8f8e8-4.mp3' },
+        { title: 'Don\'t You Worry Child', artist: 'Swedish House Mafia', preview: 'https://cdns-preview-2.dzcdn.net/stream/c-2d8f3f16e3d6b6e8c8e8f8e8f8e8f8e8-5.mp3' }
+      ]
+    };
+
+    // ============================================
+    // FONCTION 1 : Démarrer le jeu
+    // ============================================
+
+    function startGame(genre) {
+      selectedGenre = genre;
+      
+      document.querySelector('#startScreen').style.display = 'none';
+      document.querySelector('#loading').classList.add('show');
+      
+      // Simuler un délai de chargement pour l'effet réaliste
+      setTimeout(() => {
+        fetchPlaylist(genre);
+      }, 500);
+      
+      console.log('🎮 Démarrage du jeu - Genre:', genre);
+    }
+
+    // ============================================
+    // FONCTION 2 : Récupérer la playlist (VERSION MOCK)
+    // ============================================
+
+    function fetchPlaylist(genre) {
+      try {
+        // Récupérer les données mockées
+        playlist = [...mockDatabase[genre]];
+        
+        console.log('✅ Playlist chargée:', playlist.length, 'chansons (données mockées)');
+        
+        // Mélanger la playlist
+        shufflePlaylist();
+        
+        // Démarrer le jeu
+        initGame();
+        
+      } catch (error) {
+        console.error('❌ Erreur lors du chargement de la playlist:', error);
+        alert('❌ Erreur lors du chargement des musiques. Réessaye !');
+        restartGame();
+      }
+    }
+
+    // ============================================
+    // FONCTION 3 : Mélanger la playlist
+    // ============================================
+
+    function shufflePlaylist() {
+      for (let i = playlist.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [playlist[i], playlist[j]] = [playlist[j], playlist[i]];
+      }
+      console.log('🔀 Playlist mélangée');
+    }
+
+    // ============================================
+    // FONCTION 4 : Initialiser le jeu
+    // ============================================
+
+    function initGame() {
+      score = 0;
+      currentRound = 0;
+      document.querySelector('#loading').classList.remove('show');
+      document.querySelector('#gameScreen').classList.add('active');
+      loadNextSong();
+      console.log('🎮 Jeu initialisé !');
+    }
+
+    // ============================================
+    // FONCTION 5 : Charger la chanson suivante
+    // ============================================
+
+    function loadNextSong() {
+      if (currentRound < totalRounds && currentRound < playlist.length) {
+        currentSong = playlist[currentRound];
+        audioPlayer.src = currentSong.preview;
+        audioPlayer.load();
+        updateUI();
+        hideFeedback();
+        currentRound++;
+        document.querySelector('#roundDisplay').textContent = `${currentRound}/${totalRounds}`;
+        console.log(`🎵 Chanson ${currentRound}/${totalRounds} chargée:`, currentSong.title);
+      } else {
+        endGame();
+      }
+    }
+
+    // ============================================
+    // FONCTION 6 : Démarrer/Arrêter la lecture
+    // ============================================
+
+    function togglePlay() {
+      const vinyl = document.querySelector('#vinyl');
+      const playBtn = document.querySelector('#playBtn');
+      
+      if (audioPlayer.paused) {
+        audioPlayer.play();
+        vinyl.classList.add('playing');
+        playBtn.textContent = '⏸️ Pause';
+        startTimer();
+        console.log('▶️ Lecture lancée');
+      } else {
+        audioPlayer.pause();
+        vinyl.classList.remove('playing');
+        playBtn.textContent = '▶️ Jouer';
+        stopTimer();
+        console.log('⏸️ Lecture en pause');
+      }
+    }
+
+    // ============================================
+    // FONCTION 7 : Gérer le timer
+    // ============================================
+
+    function startTimer() {
+      timer = 30;
+      stopTimer();
+      
+      timerInterval = setInterval(() => {
+        timer--;
+        const timerDisplay = document.querySelector('#timerDisplay');
+        timerDisplay.textContent = timer;
+        
+        if (timer <= 10) {
+          timerDisplay.classList.add('warning');
+        } else {
+          timerDisplay.classList.remove('warning');
+        }
+        
+        if (timer <= 0) {
+          stopTimer();
+          audioPlayer.pause();
+          showFeedback(false, currentSong.artist);
+          setTimeout(() => loadNextSong(), 2500);
+        }
+      }, 1000);
+    }
+
+    function stopTimer() {
+      if (timerInterval) {
+        clearInterval(timerInterval);
+        timerInterval = null;
+      }
+    }
+
+    // ============================================
+    // FONCTION 8 : Vérifier la réponse
+    // ============================================
+
+    function checkAnswer() {
+      const userAnswer = document.querySelector('#answerInput').value;
+      
+      if (!userAnswer.trim()) {
+        alert('⚠️ Entre une réponse !');
+        return;
+      }
+      
+      const normalizedUser = normalizeString(userAnswer);
+      const normalizedCorrect = normalizeString(currentSong.artist);
+      
+      console.log('Réponse utilisateur:', normalizedUser);
+      console.log('Réponse correcte:', normalizedCorrect);
+      
+      const isCorrect = normalizedUser === normalizedCorrect || 
+                        normalizedCorrect.includes(normalizedUser) ||
+                        normalizedUser.includes(normalizedCorrect);
+      
+      audioPlayer.pause();
+      document.querySelector('#vinyl').classList.remove('playing');
+      stopTimer();
+      
+      if (isCorrect) {
+        const points = Math.max(50, timer * 3);
+        score += points;
+        showFeedback(true);
+        console.log(`✅ Bonne réponse ! +${points} points`);
+      } else {
+        showFeedback(false, currentSong.artist);
+        console.log('❌ Mauvaise réponse');
+      }
+      
+      document.querySelector('#scoreDisplay').textContent = score;
+      setTimeout(() => loadNextSong(), 2500);
+    }
+
+    // ============================================
+    // FONCTION 9 : Afficher le feedback
+    // ============================================
+
+    function showFeedback(isCorrect, correctAnswer = '') {
+      const feedback = document.querySelector('#feedback');
+      
+      if (isCorrect) {
+        feedback.textContent = '🎉 Bravo ! Bonne réponse !';
+        feedback.className = 'feedback correct show';
+      } else {
+        feedback.textContent = `❌ Raté ! C'était ${correctAnswer}`;
+        feedback.className = 'feedback wrong show';
+      }
+    }
+
+    function hideFeedback() {
+      const feedback = document.querySelector('#feedback');
+      feedback.classList.remove('show', 'correct', 'wrong');
+    }
+
+    // ============================================
+    // FONCTION 10 : Passer la chanson
+    // ============================================
+
+    function skipSong() {
+      audioPlayer.pause();
+      document.querySelector('#vinyl').classList.remove('playing');
+      stopTimer();
+      showFeedback(false, currentSong.artist);
+      console.log('⏭️ Chanson passée');
+      setTimeout(() => loadNextSong(), 2500);
+    }
+
+    // ============================================
+    // FONCTION 11 : Mettre à jour l'interface
+    // ============================================
+
+    function updateUI() {
+      document.querySelector('#scoreDisplay').textContent = score;
+      document.querySelector('#roundDisplay').textContent = `${currentRound + 1}/${totalRounds}`;
+      timer = 30;
+      document.querySelector('#timerDisplay').textContent = timer;
+      document.querySelector('#timerDisplay').classList.remove('warning');
+      document.querySelector('#answerInput').value = '';
+      document.querySelector('#playBtn').textContent = '▶️ Jouer';
+      document.querySelector('#vinyl').classList.remove('playing');
+    }
+
+    // ============================================
+    // FONCTION 12 : Terminer le jeu
+    // ============================================
+
+    function endGame() {
+      document.querySelector('#gameScreen').classList.remove('active');
+      document.querySelector('#endScreen').classList.add('active');
+      document.querySelector('#finalScore').textContent = score;
+      
+      const maxScore = totalRounds * 90;
+      const percentage = (score / maxScore) * 100;
+      
+      let message = '';
+      if (percentage >= 80) {
+        message = '🏆 Incroyable ! Tu es un expert !';
+      } else if (percentage >= 60) {
+        message = '🎵 Très bien ! Belle performance !';
+      } else if (percentage >= 40) {
+        message = '👍 Pas mal ! Continue comme ça !';
+      } else if (percentage >= 20) {
+        message = '🎧 C\'est un début ! Réessaye !';
+      } else {
+        message = '💪 Ne lâche rien ! La pratique fait le maître !';
+      }
+      
+      document.querySelector('#finalMessage').textContent = message;
+      console.log('🏁 Fin du jeu - Score final:', score);
+    }
+
+    // ============================================
+    // FONCTION 13 : Recommencer le jeu
+    // ============================================
+
+    function restartGame() {
+      score = 0;
+      currentRound = 0;
+      timer = 30;
+      currentSong = null;
+      playlist = [];
+      audioPlayer.pause();
+      audioPlayer.src = '';
+      stopTimer();
+      document.querySelector('#endScreen').classList.remove('active');
+      document.querySelector('#gameScreen').classList.remove('active');
+      document.querySelector('#loading').classList.remove('show');
+      document.querySelector('#startScreen').style.display = 'block';
+      document.querySelector('#vinyl').classList.remove('playing');
+      console.log('🔄 Jeu réinitialisé');
+    }
+
+    // ============================================
+    // FONCTION BONUS : Gérer la touche Entrée
+    // ============================================
+
+    function handleKeyPress(event) {
+      if (event.key === 'Enter') {
+        checkAnswer();
+      }
+    }
+
+    // ============================================
+    // FONCTION BONUS : Normaliser les chaînes
+    // ============================================
+
+    function normalizeString(str) {
+      return str
+        .toLowerCase()
+        .trim()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .replace(/[^a-z0-9\s]/g, '')
+        .replace(/\s+/g, ' ');
+    }
+
+    // ============================================
+    // EVENT LISTENERS
+    // ============================================
+
+    audioPlayer.addEventListener('ended', () => {
+      console.log('🔚 Chanson terminée');
+      skipSong();
+    });
+
+    // Message de bienvenue
+    console.log('%c🎵 Blind Test Musical - MOCK VERSION', 'color: #667eea; font-size: 24px; font-weight: bold;');
+    console.log('%cVersion sans API - Fonctionne partout !', 'color: #f39c12; font-size: 14px;');
+    console.log('');
+    console.log('📦 Les données sont simulées (pas d\'API externe)');
+    console.log('✅ Parfait pour apprendre sans dépendances !');
+    console.log('');
+  </script>
+</body>
+</html>

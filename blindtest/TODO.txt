@@ -1,0 +1,13 @@
+🚀 3 CHOSES À FAIRE AVANT DE LANCER :
+
+1. ✅ Exécuter supabase-schema.sql dans Supabase SQL Editor
+
+2. ✅ Activer Realtime sur les tables :
+   - game_sessions
+   - teams
+   - answers
+   
+3. ✅ Mettre votre clé Supabase dans script-supabase.js ligne 9 :
+   const SUPABASE_KEY = 'VOTRE_CLE_ANON_ICI';
+
+📖 Détails : START_HERE.md

@@ -1,26 +1,30 @@
-# 📚 Comment Utiliser les Corrections Commentées
+# 📚 Comment Travailler sur le Projet "G Faim"
 
 ## 🎯 Approche Pédagogique
 
-Les fichiers du projet **G Faim** contiennent des corrections commentées **directement dans le code**. Voici comment les utiliser efficacement.
+Le projet **G Faim** contient des TODO à compléter. L'objectif est d'apprendre en cherchant et en essayant par vous-même !
 
 ---
 
 ## 🔍 Où Trouver les Corrections ?
 
-Les corrections sont dans des **blocs de commentaires** avec cette structure :
+Les corrections ne sont **PAS** dans le code. Elles sont disponibles **auprès de votre enseignant** si vous êtes vraiment bloqué(e).
 
+**Pourquoi ?** Pour vous encourager à :
+- 🧠 Réfléchir par vous-même
+- 💪 Développer votre autonomie
+- 🔍 Apprendre à chercher des solutions
+- 🤝 Travailler en équipe
+
+Dans le code, vous trouverez :
 ```javascript
 // TODO: Fonction à compléter par les étudiants
 const maFonction = () => {
+  // Indices :
+  // - Utiliser filter()
+  // - Vérifier avec includes()
+  
   // VOTRE CODE ICI
-  
-  /* CORRECTION COMMENTÉE :
-  
-  // Explication ligne par ligne
-  const resultat = monCode();
-  
-  */
 };
 ```
 
@@ -70,14 +74,15 @@ Si vous êtes bloqué(e) :
 - Consultez le guide `PROJET_GFAIM.md` (section "Indices")
 - Demandez de l'aide à un camarade
 
-### Phase 3 : Consulter la Correction (5 min)
+### Phase 3 : Demander de l'Aide (5-10 min)
 
 En dernier recours :
-1. **Décommentez** la correction (retirez `/*` et `*/`)
-2. **Lisez ligne par ligne** avec les explications
-3. **Comprenez** la logique avant de copier
-4. **Retapez** le code (ne copiez-collez pas !)
-5. **Testez** pour vérifier que ça fonctionne
+1. **Demandez à votre enseignant** qui pourra vous donner des indices supplémentaires
+2. **Consultez la correction** si votre enseignant vous la montre
+3. **Lisez ligne par ligne** avec les explications
+4. **Comprenez** la logique avant de copier
+5. **Retapez** le code (ne copiez-collez pas !)
+6. **Testez** pour vérifier que ça fonctionne
 
 ### Phase 4 : Amélioration CSS (tout le temps restant)
 
@@ -110,30 +115,13 @@ Réfléchissez :
 
 ### 3️⃣ Si Vous Êtes Bloqué(e)
 
-Allez voir la correction commentée dans le fichier :
+Demandez à votre enseignant qui pourra :
+- Vous donner des indices supplémentaires
+- Vous expliquer la logique
+- Vous montrer un exemple similaire
+- Vous donner la correction si vraiment nécessaire
 
-```javascript
-/* CORRECTION COMMENTÉE :
-
-// 1. Vérifier que l'ingrédient n'est pas vide
-if (!ingredient || ingredient.trim() === '') {
-  return;
-}
-
-// 2. Nettoyer l'ingrédient
-const cleanedIngredient = ingredient.trim().toLowerCase();
-
-// 3. Vérifier les doublons
-if (ingredients.includes(cleanedIngredient)) {
-  alert('Cet ingrédient est déjà dans votre liste !');
-  return;
-}
-
-// 4. Ajouter au state (immutabilité !)
-setIngredients([...ingredients, cleanedIngredient]);
-
-*/
-```
+**Rappel** : Les corrections ne sont pas dans le code volontairement. Le but est que vous appreniez à chercher et à réfléchir !
 
 ### 4️⃣ Retapez et Testez
 

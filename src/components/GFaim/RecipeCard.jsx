@@ -7,39 +7,14 @@ function RecipeCard({ recipe, userIngredients, isSelected, onSelect }) {
   const getMissingIngredients = () => {
     // Comparer recipe.ingredients avec userIngredients
     // Retourner la liste des ingrédients manquants
+    // Indice : Utiliser filter() et some()
+    
     // VOTRE CODE ICI
     return [];
-    
-    /* CORRECTION COMMENTÉE :
-    
-    // filter() garde seulement les ingrédients de la recette
-    // que l'utilisateur NE possède PAS
-    return recipe.ingredients.filter(recipeIng =>
-      // !some() = AUCUN des ingrédients utilisateur ne correspond
-      !userIngredients.some(userIng =>
-        // On vérifie si l'un contient l'autre (tomates contient tomate)
-        recipeIng.toLowerCase().includes(userIng) ||
-        userIng.includes(recipeIng.toLowerCase())
-      )
-    );
-    
-    */
   };
 
   const missingIngredients = getMissingIngredients();
   const matchPercentage = 0; // TODO: Calculer le pourcentage de correspondance
-  
-  /* CORRECTION COMMENTÉE :
-  
-  // Calculer combien d'ingrédients on a
-  const matchingCount = recipe.ingredients.length - missingIngredients.length;
-  
-  // Calculer le pourcentage (et arrondir avec Math.round)
-  const matchPercentage = Math.round(
-    (matchingCount / recipe.ingredients.length) * 100
-  );
-  
-  */
 
   return (
     <div 

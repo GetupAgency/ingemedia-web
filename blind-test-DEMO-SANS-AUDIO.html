@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🎵 Blind Test Musical - DÉMO (Sans Audio)</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .container {
+      max-width: 800px;
+      width: 100%;
+      background: white;
+      border-radius: 30px;
+      padding: 40px;
+      box-shadow: 0 30px 90px rgba(0, 0, 0, 0.3);
+    }
+
+    h1 {
+      text-align: center;
+      color: #667eea;
+      font-size: 3rem;
+      margin-bottom: 10px;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #666;
+      margin-bottom: 30px;
+      font-size: 1.2rem;
+    }
+
+    .demo-badge {
+      background: #3498db;
+      color: white;
+      padding: 5px 15px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: bold;
+      display: inline-block;
+      margin-left: 10px;
+    }
+
+    .info-box {
+      background: #e3f2fd;
+      border: 2px solid #2196f3;
+      padding: 20px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .info-box strong {
+      color: #1976d2;
+      font-size: 1.1rem;
+    }
+
+    .info-box p {
+      margin-top: 10px;
+      color: #555;
+    }
+
+    /* Écran de démarrage */
+    .start-screen {
+      text-align: center;
+    }
+
+    .genre-selection {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 15px;
+      margin: 30px 0;
+    }
+
+    .genre-btn {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      padding: 20px;
+      border-radius: 15px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-weight: bold;
+    }
+
+    .genre-btn:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+    }
+
+    /* Écran de jeu */
+    .game-screen {
+      display: none;
+    }
+
+    .game-screen.active {
+      display: block;
+    }
+
+    .game-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 30px;
+      padding: 20px;
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      border-radius: 15px;
+    }
+
+    .score-box, .timer-box, .round-box {
+      text-align: center;
+    }
+
+    .score-box h3, .timer-box h3, .round-box h3 {
+      font-size: 0.9rem;
+      color: #666;
+      margin-bottom: 5px;
+    }
+
+    .score-value, .timer-value, .round-value {
+      font-size: 2rem;
+      font-weight: bold;
+      color: #667eea;
+    }
+
+    .timer-value.warning {
+      color: #e74c3c;
+      animation: blink 1s infinite;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+
+    /* Zone chanson (remplace le lecteur audio) */
+    .song-display {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      padding: 40px;
+      border-radius: 20px;
+      text-align: center;
+      margin-bottom: 30px;
+      color: white;
+    }
+
+    .song-info {
+      font-size: 1.5rem;
+      margin-bottom: 20px;
+      font-weight: bold;
+    }
+
+    .song-title {
+      font-size: 2rem;
+      margin-bottom: 10px;
+      color: #ffd700;
+    }
+
+    .hint-text {
+      font-size: 1rem;
+      opacity: 0.9;
+      font-style: italic;
+    }
+
+    .play-btn {
+      background: white;
+      color: #667eea;
+      border: none;
+      padding: 15px 40px;
+      border-radius: 50px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      font-weight: bold;
+      transition: all 0.3s ease;
+      margin-top: 20px;
+    }
+
+    .play-btn:hover {
+      transform: scale(1.1);
+      box-shadow: 0 5px 20px rgba(255, 255, 255, 0.3);
+    }
+
+    /* Zone de réponse */
+    .answer-zone {
+      background: #f8f9fa;
+      padding: 30px;
+      border-radius: 15px;
+      margin-bottom: 20px;
+    }
+
+    .answer-zone h3 {
+      color: #333;
+      margin-bottom: 15px;
+      font-size: 1.3rem;
+    }
+
+    .answer-input {
+      width: 100%;
+      padding: 15px;
+      font-size: 1.1rem;
+      border: 3px solid #ddd;
+      border-radius: 10px;
+      margin-bottom: 15px;
+      transition: border-color 0.3s;
+    }
+
+    .answer-input:focus {
+      outline: none;
+      border-color: #667eea;
+    }
+
+    .submit-btn {
+      background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
+      color: white;
+      border: none;
+      padding: 15px 40px;
+      border-radius: 10px;
+      font-size: 1.1rem;
+      cursor: pointer;
+      font-weight: bold;
+      width: 100%;
+      transition: all 0.3s ease;
+    }
+
+    .submit-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(46, 204, 113, 0.4);
+    }
+
+    .skip-btn {
+      background: #95a5a6;
+      color: white;
+      border: none;
+      padding: 10px 30px;
+      border-radius: 10px;
+      font-size: 1rem;
+      cursor: pointer;
+      margin-top: 10px;
+      width: 100%;
+    }
+
+    /* Feedback */
+    .feedback {
+      padding: 20px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      text-align: center;
+      font-size: 1.2rem;
+      font-weight: bold;
+      display: none;
+    }
+
+    .feedback.show {
+      display: block;
+      animation: slideIn 0.5s ease;
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .feedback.correct {
+      background: #d4edda;
+      color: #155724;
+      border: 2px solid #c3e6cb;
+    }
+
+    .feedback.wrong {
+      background: #f8d7da;
+      color: #721c24;
+      border: 2px solid #f5c6cb;
+    }
+
+    /* Écran de fin */
+    .end-screen {
+      display: none;
+      text-align: center;
+    }
+
+    .end-screen.active {
+      display: block;
+    }
+
+    .final-score {
+      font-size: 4rem;
+      color: #667eea;
+      font-weight: bold;
+      margin: 20px 0;
+    }
+
+    .message {
+      font-size: 1.5rem;
+      color: #666;
+      margin-bottom: 30px;
+    }
+
+    .restart-btn {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      padding: 20px 50px;
+      border-radius: 15px;
+      font-size: 1.3rem;
+      cursor: pointer;
+      font-weight: bold;
+      transition: all 0.3s ease;
+    }
+
+    .restart-btn:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🎵 Blind Test Musical <span class="demo-badge">📚 DÉMO</span></h1>
+    <p class="subtitle">Version d'entraînement - Sans audio</p>
+
+    <div class="info-box">
+      <strong>ℹ️ Version Démo Pédagogique</strong>
+      <p>Cette version montre le <strong>titre de la chanson</strong> au lieu de jouer l'audio.<br>
+      Parfait pour comprendre la logique du jeu sans problèmes CORS ! 🎓</p>
+    </div>
+
+    <!-- Écran de démarrage -->
+    <div class="start-screen" id="startScreen">
+      <h2>Choisis un genre musical :</h2>
+      <div class="genre-selection">
+        <button class="genre-btn" onclick="startGame('pop')">🎤 Pop</button>
+        <button class="genre-btn" onclick="startGame('rap')">🎧 Rap</button>
+        <button class="genre-btn" onclick="startGame('rock')">🎸 Rock</button>
+        <button class="genre-btn" onclick="startGame('electro')">⚡ Electro</button>
+      </div>
+    </div>
+
+    <!-- Écran de jeu -->
+    <div class="game-screen" id="gameScreen">
+      <div class="game-header">
+        <div class="score-box">
+          <h3>Score</h3>
+          <div class="score-value" id="scoreDisplay">0</div>
+        </div>
+        <div class="round-box">
+          <h3>Manche</h3>
+          <div class="round-value" id="roundDisplay">1/10</div>
+        </div>
+        <div class="timer-box">
+          <h3>Temps</h3>
+          <div class="timer-value" id="timerDisplay">30</div>
+        </div>
+      </div>
+
+      <!-- Affichage de la chanson -->
+      <div class="song-display">
+        <div class="song-info">🎵 Chanson jouée :</div>
+        <div class="song-title" id="songTitle">???</div>
+        <div class="hint-text">(En mode réel, tu écouterais l'audio !)</div>
+        <button class="play-btn" id="playBtn" onclick="startTimer()">▶️ Démarrer le chrono</button>
+      </div>
+
+      <!-- Feedback -->
+      <div class="feedback" id="feedback"></div>
+
+      <!-- Zone de réponse -->
+      <div class="answer-zone">
+        <h3>Qui est l'artiste ?</h3>
+        <input 
+          type="text" 
+          class="answer-input" 
+          id="answerInput" 
+          placeholder="Tape le nom de l'artiste..."
+          onkeypress="handleKeyPress(event)"
+        >
+        <button class="submit-btn" onclick="checkAnswer()">✅ Valider ma réponse</button>
+        <button class="skip-btn" onclick="skipSong()">⏭️ Passer cette chanson</button>
+      </div>
+    </div>
+
+    <!-- Écran de fin -->
+    <div class="end-screen" id="endScreen">
+      <h2>🎉 Partie terminée !</h2>
+      <div class="final-score" id="finalScore">0</div>
+      <p class="message" id="finalMessage">Bravo !</p>
+      <button class="restart-btn" onclick="restartGame()">🔄 Rejouer</button>
+    </div>
+  </div>
+
+  <script>
+    // ============================================
+    // VARIABLES GLOBALES
+    // ============================================
+
+    let score = 0;
+    let currentRound = 0;
+    let totalRounds = 10;
+    let timer = 30;
+    let timerInterval = null;
+    let currentSong = null;
+    let playlist = [];
+    let selectedGenre = '';
+    let timerStarted = false;
+
+    // ============================================
+    // BASE DE DONNÉES SIMULÉE
+    // ============================================
+
+    const mockDatabase = {
+      pop: [
+        { title: 'Levitating', artist: 'Dua Lipa' },
+        { title: 'Shape of You', artist: 'Ed Sheeran' },
+        { title: 'Anti-Hero', artist: 'Taylor Swift' },
+        { title: 'Positions', artist: 'Ariana Grande' },
+        { title: 'Uptown Funk', artist: 'Bruno Mars' },
+        { title: 'Blinding Lights', artist: 'The Weeknd' },
+        { title: 'Sorry', artist: 'Justin Bieber' },
+        { title: 'Bad Guy', artist: 'Billie Eilish' },
+        { title: 'Watermelon Sugar', artist: 'Harry Styles' },
+        { title: 'Hello', artist: 'Adele' }
+      ],
+      rap: [
+        { title: 'Lose Yourself', artist: 'Eminem' },
+        { title: 'God\'s Plan', artist: 'Drake' },
+        { title: 'HUMBLE.', artist: 'Kendrick Lamar' },
+        { title: 'Circles', artist: 'Post Malone' },
+        { title: 'SICKO MODE', artist: 'Travis Scott' },
+        { title: 'Super Bass', artist: 'Nicki Minaj' },
+        { title: 'WAP', artist: 'Cardi B' },
+        { title: 'Old Town Road', artist: 'Lil Nas X' },
+        { title: 'Self Care', artist: 'Mac Miller' },
+        { title: 'a lot', artist: '21 Savage' }
+      ],
+      rock: [
+        { title: 'Bohemian Rhapsody', artist: 'Queen' },
+        { title: 'Hey Jude', artist: 'The Beatles' },
+        { title: 'Back In Black', artist: 'AC/DC' },
+        { title: 'Enter Sandman', artist: 'Metallica' },
+        { title: 'Smells Like Teen Spirit', artist: 'Nirvana' },
+        { title: 'Californication', artist: 'Red Hot Chili Peppers' },
+        { title: 'Everlong', artist: 'Foo Fighters' },
+        { title: 'Do I Wanna Know?', artist: 'Arctic Monkeys' },
+        { title: 'Supermassive Black Hole', artist: 'Muse' },
+        { title: 'Boulevard of Broken Dreams', artist: 'Green Day' }
+      ],
+      electro: [
+        { title: 'Get Lucky', artist: 'Daft Punk' },
+        { title: 'Summer', artist: 'Calvin Harris' },
+        { title: 'Titanium', artist: 'David Guetta' },
+        { title: 'Wake Me Up', artist: 'Avicii' },
+        { title: 'Animals', artist: 'Martin Garrix' },
+        { title: 'Alone', artist: 'Marshmello' },
+        { title: 'Firestone', artist: 'Kygo' },
+        { title: 'Closer', artist: 'The Chainsmokers' },
+        { title: 'Adagio for Strings', artist: 'Tiësto' },
+        { title: 'Don\'t You Worry Child', artist: 'Swedish House Mafia' }
+      ]
+    };
+
+    // ============================================
+    // FONCTIONS PRINCIPALES
+    // ============================================
+
+    function startGame(genre) {
+      selectedGenre = genre;
+      document.querySelector('#startScreen').style.display = 'none';
+      document.querySelector('#gameScreen').classList.add('active');
+      fetchPlaylist(genre);
+      console.log('🎮 Démarrage du jeu - Genre:', genre);
+    }
+
+    function fetchPlaylist(genre) {
+      playlist = [...mockDatabase[genre]];
+      shufflePlaylist();
+      initGame();
+      console.log('✅ Playlist chargée:', playlist.length, 'chansons');
+    }
+
+    function shufflePlaylist() {
+      for (let i = playlist.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [playlist[i], playlist[j]] = [playlist[j], playlist[i]];
+      }
+      console.log('🔀 Playlist mélangée');
+    }
+
+    function initGame() {
+      score = 0;
+      currentRound = 0;
+      loadNextSong();
+      console.log('🎮 Jeu initialisé !');
+    }
+
+    function loadNextSong() {
+      if (currentRound < totalRounds && currentRound < playlist.length) {
+        currentSong = playlist[currentRound];
+        timerStarted = false;
+        updateUI();
+        hideFeedback();
+        
+        // Afficher le titre de la chanson
+        document.querySelector('#songTitle').textContent = currentSong.title;
+        document.querySelector('#playBtn').textContent = '▶️ Démarrer le chrono';
+        
+        currentRound++;
+        document.querySelector('#roundDisplay').textContent = `${currentRound}/${totalRounds}`;
+        console.log(`🎵 Chanson ${currentRound}/${totalRounds}:`, currentSong.title, '-', currentSong.artist);
+      } else {
+        endGame();
+      }
+    }
+
+    function startTimer() {
+      if (timerStarted) return;
+      
+      timerStarted = true;
+      timer = 30;
+      document.querySelector('#playBtn').textContent = '⏱️ En cours...';
+      document.querySelector('#playBtn').disabled = true;
+      
+      timerInterval = setInterval(() => {
+        timer--;
+        const timerDisplay = document.querySelector('#timerDisplay');
+        timerDisplay.textContent = timer;
+        
+        if (timer <= 10) {
+          timerDisplay.classList.add('warning');
+        } else {
+          timerDisplay.classList.remove('warning');
+        }
+        
+        if (timer <= 0) {
+          stopTimer();
+          showFeedback(false, currentSong.artist);
+          setTimeout(() => loadNextSong(), 2500);
+        }
+      }, 1000);
+    }
+
+    function stopTimer() {
+      if (timerInterval) {
+        clearInterval(timerInterval);
+        timerInterval = null;
+      }
+      document.querySelector('#playBtn').disabled = false;
+    }
+
+    function checkAnswer() {
+      if (!timerStarted) {
+        alert('⚠️ Démarre le chrono d\'abord !');
+        return;
+      }
+
+      const userAnswer = document.querySelector('#answerInput').value;
+      
+      if (!userAnswer.trim()) {
+        alert('⚠️ Entre une réponse !');
+        return;
+      }
+      
+      const normalizedUser = normalizeString(userAnswer);
+      const normalizedCorrect = normalizeString(currentSong.artist);
+      
+      console.log('Réponse:', normalizedUser, '| Correct:', normalizedCorrect);
+      
+      const isCorrect = normalizedUser === normalizedCorrect || 
+                        normalizedCorrect.includes(normalizedUser) ||
+                        normalizedUser.includes(normalizedCorrect);
+      
+      stopTimer();
+      
+      if (isCorrect) {
+        const points = Math.max(50, timer * 3);
+        score += points;
+        showFeedback(true);
+        console.log(`✅ Bonne réponse ! +${points} points`);
+      } else {
+        showFeedback(false, currentSong.artist);
+        console.log('❌ Mauvaise réponse');
+      }
+      
+      document.querySelector('#scoreDisplay').textContent = score;
+      setTimeout(() => loadNextSong(), 2500);
+    }
+
+    function showFeedback(isCorrect, correctAnswer = '') {
+      const feedback = document.querySelector('#feedback');
+      
+      if (isCorrect) {
+        feedback.textContent = '🎉 Bravo ! Bonne réponse !';
+        feedback.className = 'feedback correct show';
+      } else {
+        feedback.textContent = `❌ Raté ! C'était ${correctAnswer}`;
+        feedback.className = 'feedback wrong show';
+      }
+    }
+
+    function hideFeedback() {
+      const feedback = document.querySelector('#feedback');
+      feedback.classList.remove('show', 'correct', 'wrong');
+    }
+
+    function skipSong() {
+      if (!timerStarted) {
+        alert('⚠️ Démarre le chrono d\'abord !');
+        return;
+      }
+      
+      stopTimer();
+      showFeedback(false, currentSong.artist);
+      console.log('⏭️ Chanson passée');
+      setTimeout(() => loadNextSong(), 2500);
+    }
+
+    function updateUI() {
+      document.querySelector('#scoreDisplay').textContent = score;
+      document.querySelector('#roundDisplay').textContent = `${currentRound + 1}/${totalRounds}`;
+      timer = 30;
+      document.querySelector('#timerDisplay').textContent = timer;
+      document.querySelector('#timerDisplay').classList.remove('warning');
+      document.querySelector('#answerInput').value = '';
+    }
+
+    function endGame() {
+      document.querySelector('#gameScreen').classList.remove('active');
+      document.querySelector('#endScreen').classList.add('active');
+      document.querySelector('#finalScore').textContent = score;
+      
+      const maxScore = totalRounds * 90;
+      const percentage = (score / maxScore) * 100;
+      
+      let message = '';
+      if (percentage >= 80) message = '🏆 Incroyable ! Tu es un expert !';
+      else if (percentage >= 60) message = '🎵 Très bien ! Belle performance !';
+      else if (percentage >= 40) message = '👍 Pas mal ! Continue comme ça !';
+      else if (percentage >= 20) message = '🎧 C\'est un début ! Réessaye !';
+      else message = '💪 Ne lâche rien ! La pratique fait le maître !';
+      
+      document.querySelector('#finalMessage').textContent = message;
+      console.log('🏁 Fin du jeu - Score:', score);
+    }
+
+    function restartGame() {
+      score = 0;
+      currentRound = 0;
+      timer = 30;
+      currentSong = null;
+      playlist = [];
+      stopTimer();
+      document.querySelector('#endScreen').classList.remove('active');
+      document.querySelector('#gameScreen').classList.remove('active');
+      document.querySelector('#startScreen').style.display = 'block';
+      console.log('🔄 Jeu réinitialisé');
+    }
+
+    function handleKeyPress(event) {
+      if (event.key === 'Enter') {
+        checkAnswer();
+      }
+    }
+
+    function normalizeString(str) {
+      return str
+        .toLowerCase()
+        .trim()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .replace(/[^a-z0-9\s]/g, '')
+        .replace(/\s+/g, ' ');
+    }
+
+    // Message console
+    console.log('%c🎵 Blind Test - VERSION DÉMO', 'color: #3498db; font-size: 24px; font-weight: bold;');
+    console.log('%cVersion pédagogique sans audio - Parfait pour apprendre !', 'color: #555; font-size: 14px;');
+  </script>
+</body>
+</html>

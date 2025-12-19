@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🎵 Blind Test Musical - À compléter (Sans Audio)</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .container {
+      max-width: 800px;
+      width: 100%;
+      background: white;
+      border-radius: 30px;
+      padding: 40px;
+      box-shadow: 0 30px 90px rgba(0, 0, 0, 0.3);
+    }
+
+    h1 {
+      text-align: center;
+      color: #667eea;
+      font-size: 3rem;
+      margin-bottom: 10px;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #666;
+      margin-bottom: 30px;
+      font-size: 1.2rem;
+    }
+
+    .todo-badge {
+      background: #ff9800;
+      color: white;
+      padding: 5px 15px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: bold;
+      display: inline-block;
+      margin-left: 10px;
+    }
+
+    .info-box {
+      background: #fff3cd;
+      border: 2px solid #ffc107;
+      padding: 20px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+    }
+
+    .info-box strong {
+      color: #856404;
+      font-size: 1.1rem;
+    }
+
+    .info-box p {
+      margin-top: 10px;
+      color: #555;
+    }
+
+    /* Écran de démarrage */
+    .start-screen {
+      text-align: center;
+    }
+
+    .genre-selection {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 15px;
+      margin: 30px 0;
+    }
+
+    .genre-btn {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      padding: 20px;
+      border-radius: 15px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-weight: bold;
+    }
+
+    .genre-btn:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+    }
+
+    /* Écran de jeu */
+    .game-screen {
+      display: none;
+    }
+
+    .game-screen.active {
+      display: block;
+    }
+
+    .game-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 30px;
+      padding: 20px;
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      border-radius: 15px;
+    }
+
+    .score-box, .timer-box, .round-box {
+      text-align: center;
+    }
+
+    .score-box h3, .timer-box h3, .round-box h3 {
+      font-size: 0.9rem;
+      color: #666;
+      margin-bottom: 5px;
+    }
+
+    .score-value, .timer-value, .round-value {
+      font-size: 2rem;
+      font-weight: bold;
+      color: #667eea;
+    }
+
+    .timer-value.warning {
+      color: #e74c3c;
+      animation: blink 1s infinite;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+
+    /* Zone chanson */
+    .song-display {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      padding: 40px;
+      border-radius: 20px;
+      text-align: center;
+      margin-bottom: 30px;
+      color: white;
+    }
+
+    .song-info {
+      font-size: 1.5rem;
+      margin-bottom: 20px;
+      font-weight: bold;
+    }
+
+    .song-title {
+      font-size: 2rem;
+      margin-bottom: 10px;
+      color: #ffd700;
+    }
+
+    .hint-text {
+      font-size: 1rem;
+      opacity: 0.9;
+      font-style: italic;
+    }
+
+    .play-btn {
+      background: white;
+      color: #667eea;
+      border: none;
+      padding: 15px 40px;
+      border-radius: 50px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      font-weight: bold;
+      transition: all 0.3s ease;
+      margin-top: 20px;
+    }
+
+    .play-btn:hover {
+      transform: scale(1.1);
+      box-shadow: 0 5px 20px rgba(255, 255, 255, 0.3);
+    }
+
+    /* Zone de réponse */
+    .answer-zone {
+      background: #f8f9fa;
+      padding: 30px;
+      border-radius: 15px;
+      margin-bottom: 20px;
+    }
+
+    .answer-zone h3 {
+      color: #333;
+      margin-bottom: 15px;
+      font-size: 1.3rem;
+    }
+
+    .answer-input {
+      width: 100%;
+      padding: 15px;
+      font-size: 1.1rem;
+      border: 3px solid #ddd;
+      border-radius: 10px;
+      margin-bottom: 15px;
+      transition: border-color 0.3s;
+    }
+
+    .answer-input:focus {
+      outline: none;
+      border-color: #667eea;
+    }
+
+    .submit-btn {
+      background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
+      color: white;
+      border: none;
+      padding: 15px 40px;
+      border-radius: 10px;
+      font-size: 1.1rem;
+      cursor: pointer;
+      font-weight: bold;
+      width: 100%;
+      transition: all 0.3s ease;
+    }
+
+    .submit-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(46, 204, 113, 0.4);
+    }
+
+    .skip-btn {
+      background: #95a5a6;
+      color: white;
+      border: none;
+      padding: 10px 30px;
+      border-radius: 10px;
+      font-size: 1rem;
+      cursor: pointer;
+      margin-top: 10px;
+      width: 100%;
+    }
+
+    /* Feedback */
+    .feedback {
+      padding: 20px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      text-align: center;
+      font-size: 1.2rem;
+      font-weight: bold;
+      display: none;
+    }
+
+    .feedback.show {
+      display: block;
+      animation: slideIn 0.5s ease;
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .feedback.correct {
+      background: #d4edda;
+      color: #155724;
+      border: 2px solid #c3e6cb;
+    }
+
+    .feedback.wrong {
+      background: #f8d7da;
+      color: #721c24;
+      border: 2px solid #f5c6cb;
+    }
+
+    /* Écran de fin */
+    .end-screen {
+      display: none;
+      text-align: center;
+    }
+
+    .end-screen.active {
+      display: block;
+    }
+
+    .final-score {
+      font-size: 4rem;
+      color: #667eea;
+      font-weight: bold;
+      margin: 20px 0;
+    }
+
+    .message {
+      font-size: 1.5rem;
+      color: #666;
+      margin-bottom: 30px;
+    }
+
+    .restart-btn {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      padding: 20px 50px;
+      border-radius: 15px;
+      font-size: 1.3rem;
+      cursor: pointer;
+      font-weight: bold;
+      transition: all 0.3s ease;
+    }
+
+    .restart-btn:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🎵 Blind Test Musical <span class="todo-badge">TODO</span></h1>
+    <p class="subtitle">À toi de compléter les fonctions !</p>
+
+    <div class="info-box">
+      <strong>💡 Instructions</strong>
+      <p>Complète les fonctions JavaScript marquées TODO ci-dessous.<br>
+      Cette version affiche le <strong>titre de la chanson</strong> au lieu de jouer l'audio (pour éviter les problèmes CORS).<br>
+      Ouvre la console (F12) pour déboguer !</p>
+    </div>
+
+    <!-- Écran de démarrage -->
+    <div class="start-screen" id="startScreen">
+      <h2>Choisis un genre musical :</h2>
+      <div class="genre-selection">
+        <button class="genre-btn" onclick="startGame('pop')">🎤 Pop</button>
+        <button class="genre-btn" onclick="startGame('rap')">🎧 Rap</button>
+        <button class="genre-btn" onclick="startGame('rock')">🎸 Rock</button>
+        <button class="genre-btn" onclick="startGame('electro')">⚡ Electro</button>
+      </div>
+    </div>
+
+    <!-- Écran de jeu -->
+    <div class="game-screen" id="gameScreen">
+      <div class="game-header">
+        <div class="score-box">
+          <h3>Score</h3>
+          <div class="score-value" id="scoreDisplay">0</div>
+        </div>
+        <div class="round-box">
+          <h3>Manche</h3>
+          <div class="round-value" id="roundDisplay">1/10</div>
+        </div>
+        <div class="timer-box">
+          <h3>Temps</h3>
+          <div class="timer-value" id="timerDisplay">30</div>
+        </div>
+      </div>
+
+      <!-- Affichage de la chanson -->
+      <div class="song-display">
+        <div class="song-info">🎵 Chanson jouée :</div>
+        <div class="song-title" id="songTitle">???</div>
+        <div class="hint-text">(En mode réel, tu écouterais l'audio !)</div>
+        <button class="play-btn" id="playBtn" onclick="startTimer()">▶️ Démarrer le chrono</button>
+      </div>
+
+      <!-- Feedback -->
+      <div class="feedback" id="feedback"></div>
+
+      <!-- Zone de réponse -->
+      <div class="answer-zone">
+        <h3>Qui est l'artiste ? <span class="todo-badge">TODO</span></h3>
+        <input 
+          type="text" 
+          class="answer-input" 
+          id="answerInput" 
+          placeholder="Tape le nom de l'artiste..."
+          onkeypress="handleKeyPress(event)"
+        >
+        <button class="submit-btn" onclick="checkAnswer()">✅ Valider ma réponse</button>
+        <button class="skip-btn" onclick="skipSong()">⏭️ Passer cette chanson</button>
+      </div>
+    </div>
+
+    <!-- Écran de fin -->
+    <div class="end-screen" id="endScreen">
+      <h2>🎉 Partie terminée !</h2>
+      <div class="final-score" id="finalScore">0</div>
+      <p class="message" id="finalMessage">Bravo !</p>
+      <button class="restart-btn" onclick="restartGame()">🔄 Rejouer</button>
+    </div>
+  </div>
+
+  <script>
+    // ============================================
+    // VARIABLES GLOBALES
+    // ============================================
+
+    // TODO: Déclare toutes les variables globales nécessaires
+    let score = 0;
+    let currentRound = 0;
+    let totalRounds = 10;
+    let timer = 30;
+    let timerInterval = null;
+    let currentSong = null;
+    let playlist = [];
+    let selectedGenre = '';
+    let timerStarted = false;
+
+    // ============================================
+    // BASE DE DONNÉES SIMULÉE (fournie)
+    // ============================================
+
+    const mockDatabase = {
+      pop: [
+        { title: 'Levitating', artist: 'Dua Lipa' },
+        { title: 'Shape of You', artist: 'Ed Sheeran' },
+        { title: 'Anti-Hero', artist: 'Taylor Swift' },
+        { title: 'Positions', artist: 'Ariana Grande' },
+        { title: 'Uptown Funk', artist: 'Bruno Mars' },
+        { title: 'Blinding Lights', artist: 'The Weeknd' },
+        { title: 'Sorry', artist: 'Justin Bieber' },
+        { title: 'Bad Guy', artist: 'Billie Eilish' },
+        { title: 'Watermelon Sugar', artist: 'Harry Styles' },
+        { title: 'Hello', artist: 'Adele' }
+      ],
+      rap: [
+        { title: 'Lose Yourself', artist: 'Eminem' },
+        { title: 'God\'s Plan', artist: 'Drake' },
+        { title: 'HUMBLE.', artist: 'Kendrick Lamar' },
+        { title: 'Circles', artist: 'Post Malone' },
+        { title: 'SICKO MODE', artist: 'Travis Scott' },
+        { title: 'Super Bass', artist: 'Nicki Minaj' },
+        { title: 'WAP', artist: 'Cardi B' },
+        { title: 'Old Town Road', artist: 'Lil Nas X' },
+        { title: 'Self Care', artist: 'Mac Miller' },
+        { title: 'a lot', artist: '21 Savage' }
+      ],
+      rock: [
+        { title: 'Bohemian Rhapsody', artist: 'Queen' },
+        { title: 'Hey Jude', artist: 'The Beatles' },
+        { title: 'Back In Black', artist: 'AC/DC' },
+        { title: 'Enter Sandman', artist: 'Metallica' },
+        { title: 'Smells Like Teen Spirit', artist: 'Nirvana' },
+        { title: 'Californication', artist: 'Red Hot Chili Peppers' },
+        { title: 'Everlong', artist: 'Foo Fighters' },
+        { title: 'Do I Wanna Know?', artist: 'Arctic Monkeys' },
+        { title: 'Supermassive Black Hole', artist: 'Muse' },
+        { title: 'Boulevard of Broken Dreams', artist: 'Green Day' }
+      ],
+      electro: [
+        { title: 'Get Lucky', artist: 'Daft Punk' },
+        { title: 'Summer', artist: 'Calvin Harris' },
+        { title: 'Titanium', artist: 'David Guetta' },
+        { title: 'Wake Me Up', artist: 'Avicii' },
+        { title: 'Animals', artist: 'Martin Garrix' },
+        { title: 'Alone', artist: 'Marshmello' },
+        { title: 'Firestone', artist: 'Kygo' },
+        { title: 'Closer', artist: 'The Chainsmokers' },
+        { title: 'Adagio for Strings', artist: 'Tiësto' },
+        { title: 'Don\'t You Worry Child', artist: 'Swedish House Mafia' }
+      ]
+    };
+
+    // ============================================
+    // FONCTION 1 : Démarrer le jeu <span class="todo-badge">TODO</span>
+    // ============================================
+
+    function startGame(genre) {
+      // TODO:
+      // 1. Enregistre le genre dans selectedGenre
+      // 2. Cache l'écran de démarrage (#startScreen)
+      // 3. Affiche l'écran de jeu (#gameScreen)
+      // 4. Appelle fetchPlaylist(genre)
+      
+      console.log('🎮 Démarrage du jeu - Genre:', genre);
+      
+      // VOTRE CODE ICI
+      
+    }
+
+    // ============================================
+    // FONCTION 2 : Récupérer la playlist <span class="todo-badge">TODO</span>
+    // ============================================
+
+    function fetchPlaylist(genre) {
+      // TODO:
+      // 1. Copie les données de mockDatabase[genre] dans playlist
+      //    Utilise le spread operator : [...mockDatabase[genre]]
+      // 2. Appelle shufflePlaylist()
+      // 3. Appelle initGame()
+      
+      console.log('✅ Playlist chargée:', playlist.length, 'chansons');
+      
+      // VOTRE CODE ICI
+      
+    }
+
+    // ============================================
+    // FONCTION 3 : Mélanger la playlist <span class="todo-badge">TODO</span>
+    // ============================================
+
+    function shufflePlaylist() {
+      // TODO: Utilise l'algorithme de Fisher-Yates
+      // Pour chaque élément du tableau (de la fin vers le début) :
+      // 1. Génère un index aléatoire j entre 0 et i
+      // 2. Échange playlist[i] et playlist[j]
+      // Aide : [a, b] = [b, a] pour échanger
+      
+      console.log('🔀 Playlist mélangée');
+      
+      // VOTRE CODE ICI
+      
+    }
+
+    // ============================================
+    // FONCTION 4 : Initialiser le jeu <span class="todo-badge">TODO</span>
+    // ============================================
+
+    function initGame() {
+      // TODO:
+      // 1. Réinitialise score et currentRound à 0
+      // 2. Appelle loadNextSong()
+      
+      console.log('🎮 Jeu initialisé !');
+      
+      // VOTRE CODE ICI
+      
+    }
+
+    // ============================================
+    // FONCTION 5 : Charger la chanson suivante <span class="todo-badge">TODO</span>
+    // ============================================
+
+    function loadNextSong() {
+      // TODO:
+      // 1. Vérifie si currentRound < totalRounds ET currentRound < playlist.length
+      // 2. Si oui :
+      //    - currentSong = playlist[currentRound]
+      //    - timerStarted = false
+      //    - Appelle updateUI() et hideFeedback()
+      //    - Affiche le titre dans #songTitle
+      //    - Change le texte du bouton play
+      //    - Incrémente currentRound
+      //    - Met à jour #roundDisplay
+      // 3. Sinon : appelle endGame()
+      
+      console.log(`🎵 Chanson ${currentRound + 1}/${totalRounds} chargée`);
+      
+      // VOTRE CODE ICI
+      
+    }
+
+    // ============================================
+    // FONCTION 6 : Démarrer le timer <span class="todo-badge">TODO</span>
+    // ============================================
+
+    function startTimer() {
+      // TODO:
+      // 1. Vérifie que timerStarted est false, sinon return
+      // 2. timerStarted = true
+      // 3. timer = 30
+      // 4. Change le texte et désactive le bouton play
+      // 5. Crée un setInterval qui se répète chaque 1000ms (1 seconde)
+      //    Dans l'interval :
+      //    - Décrémente timer
+      //    - Met à jour #timerDisplay
+      //    - Si timer <= 10, ajoute la classe 'warning'
+      //    - Si timer = 0 : stopTimer(), showFeedback(false, currentSong.artist), loadNextSong()
+      
+      // VOTRE CODE ICI
+      
+    }
+
+    // ============================================
+    // FONCTION 7 : Arrêter le timer <span class="todo-badge">TODO</span>
+    // ============================================
+
+    function stopTimer() {
+      // TODO:
+      // 1. Si timerInterval existe, utilise clearInterval()
+      // 2. Réactive le bouton play
+      
+      // VOTRE CODE ICI
+      
+    }
+
+    // ============================================
+    // FONCTION 8 : Vérifier la réponse <span class="todo-badge">TODO</span>
+    // ============================================
+
+    function checkAnswer() {
+      // TODO:
+      // 1. Vérifie que timerStarted est true
+      // 2. Récupère la valeur de #answerInput
+      // 3. Vérifie qu'elle n'est pas vide
+      // 4. Normalise la réponse utilisateur et l'artiste avec normalizeString()
+      // 5. Compare les deux (égalité ou inclusion)
+      // 6. Appelle stopTimer()
+      // 7. Si correct : ajoute des points, showFeedback(true)
+      // 8. Sinon : showFeedback(false, currentSong.artist)
+      // 9. Met à jour le score
+      // 10. Après 2.5s, charge la chanson suivante
+      
+      console.log('Vérification de la réponse...');
+      
+      // VOTRE CODE ICI
+      
+    }
+
+    // ============================================
+    // FONCTION 9 : Afficher le feedback <span class="todo-badge">TODO</span>
+    // ============================================
+
+    function showFeedback(isCorrect, correctAnswer = '') {
+      // TODO:
+      // 1. Sélectionne #feedback
+      // 2. Si isCorrect : message "Bravo !", classe 'feedback correct show'
+      // 3. Sinon : message avec correctAnswer, classe 'feedback wrong show'
+      
+      // VOTRE CODE ICI
+      
+    }
+
+    function hideFeedback() {
+      // TODO: Retire les classes 'show', 'correct', 'wrong' de #feedback
+      
+      // VOTRE CODE ICI
+      
+    }
+
+    // ============================================
+    // FONCTION 10 : Passer la chanson <span class="todo-badge">TODO</span>
+    // ============================================
+
+    function skipSong() {
+      // TODO:
+      // 1. Vérifie que timerStarted est true
+      // 2. Appelle stopTimer()
+      // 3. Affiche le feedback avec la bonne réponse
+      // 4. Après 2.5s, charge la chanson suivante
+      
+      console.log('⏭️ Chanson passée');
+      
+      // VOTRE CODE ICI
+      
+    }
+
+    // ============================================
+    // FONCTION 11 : Mettre à jour l'interface <span class="todo-badge">TODO</span>
+    // ============================================
+
+    function updateUI() {
+      // TODO:
+      // 1. Met à jour #scoreDisplay avec score
+      // 2. Met à jour #roundDisplay avec currentRound + 1
+      // 3. Réinitialise timer à 30 et met à jour #timerDisplay
+      // 4. Retire la classe 'warning' du timer
+      // 5. Vide l'input #answerInput
+      
+      // VOTRE CODE ICI
+      
+    }
+
+    // ============================================
+    // FONCTION 12 : Terminer le jeu <span class="todo-badge">TODO</span>
+    // ============================================
+
+    function endGame() {
+      // TODO:
+      // 1. Cache #gameScreen
+      // 2. Affiche #endScreen
+      // 3. Affiche le score final dans #finalScore
+      // 4. Calcule le pourcentage de réussite
+      // 5. Affiche un message selon le score dans #finalMessage
+      
+      console.log('🏁 Fin du jeu - Score:', score);
+      
+      // VOTRE CODE ICI
+      
+    }
+
+    // ============================================
+    // FONCTION 13 : Recommencer le jeu <span class="todo-badge">TODO</span>
+    // ============================================
+
+    function restartGame() {
+      // TODO:
+      // 1. Réinitialise toutes les variables globales
+      // 2. Appelle stopTimer()
+      // 3. Cache #endScreen et #gameScreen
+      // 4. Affiche #startScreen
+      
+      console.log('🔄 Jeu réinitialisé');
+      
+      // VOTRE CODE ICI
+      
+    }
+
+    // ============================================
+    // FONCTIONS BONUS
+    // ============================================
+
+    function handleKeyPress(event) {
+      // TODO: Si la touche est 'Enter', appelle checkAnswer()
+      
+      // VOTRE CODE ICI
+      
+    }
+
+    function normalizeString(str) {
+      // Fonction fournie : normalise une chaîne (retire accents, met en minuscules, etc.)
+      return str
+        .toLowerCase()
+        .trim()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .replace(/[^a-z0-9\s]/g, '')
+        .replace(/\s+/g, ' ');
+    }
+
+    // ============================================
+    // INITIALISATION
+    // ============================================
+
+    console.log('%c🎵 Blind Test - À TOI DE JOUER !', 'color: #667eea; font-size: 24px; font-weight: bold;');
+    console.log('%cComplète les fonctions marquées TODO', 'color: #ff9800; font-size: 14px;');
+    console.log('');
+    console.log('💡 Utilise console.log() pour déboguer');
+    console.log('');
+  </script>
+</body>
+</html>

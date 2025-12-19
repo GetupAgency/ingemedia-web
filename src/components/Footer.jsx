@@ -52,7 +52,7 @@ function Footer() {
           </div>
           <div className="footer-version">
             <span className="version-badge">Version 1.3.0</span>
-            <span className="version-date">Mise à jour le 18/12/2025 à 22:45</span>
+            <span className="version-date">Mise à jour le 18/12/2025 à 23:35</span>
           </div>
         </div>
       </div>

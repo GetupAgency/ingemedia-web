@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blind Test Musical - Correction</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+      min-height: 100vh;
+      padding: 40px 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(139, 92, 246, 0.1) 0%, transparent 70%);
+      animation: rotate 20s linear infinite;
+      pointer-events: none;
+    }
+
+    @keyframes rotate {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    .container {
+      max-width: 900px;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 24px;
+      padding: 48px;
+      box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      position: relative;
+      z-index: 1;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #a78bfa 0%, #8b5cf6 50%, #7c3aed 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 12px;
+      letter-spacing: -0.02em;
+    }
+
+    .subtitle {
+      color: rgba(255, 255, 255, 0.6);
+      font-size: 1rem;
+      font-weight: 400;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 6px 16px;
+      background: rgba(139, 92, 246, 0.2);
+      border: 1px solid rgba(139, 92, 246, 0.3);
+      border-radius: 20px;
+      color: #a78bfa;
+      font-size: 0.875rem;
+      font-weight: 500;
+      margin-top: 12px;
+    }
+
+    /* Écran de démarrage */
+    .start-screen {
+      text-align: center;
+    }
+
+    .start-screen h2 {
+      color: #fff;
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 32px;
+    }
+
+    .genre-selection {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 16px;
+    }
+
+    .genre-btn {
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: #fff;
+      padding: 24px;
+      border-radius: 16px;
+      font-size: 1.125rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .genre-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(139, 92, 246, 0.2), rgba(124, 58, 237, 0.2));
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .genre-btn:hover {
+      transform: translateY(-4px);
+      box-shadow: 
+        0 12px 24px rgba(139, 92, 246, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      border-color: rgba(139, 92, 246, 0.4);
+    }
+
+    .genre-btn:hover::before {
+      opacity: 1;
+    }
+
+    .genre-btn:active {
+      transform: translateY(-2px);
+    }
+
+    /* Écran de jeu */
+    .game-screen {
+      display: none;
+    }
+
+    .game-screen.active {
+      display: block;
+    }
+
+    .game-header {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+
+    .stat-card {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      padding: 20px;
+      text-align: center;
+      backdrop-filter: blur(10px);
+    }
+
+    .stat-label {
+      font-size: 0.875rem;
+      color: rgba(255, 255, 255, 0.5);
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 8px;
+    }
+
+    .stat-value {
+      font-size: 2.5rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #a78bfa, #8b5cf6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .stat-value.warning {
+      background: linear-gradient(135deg, #ef4444, #dc2626);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: pulse-warning 1s infinite;
+    }
+
+    @keyframes pulse-warning {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.6; }
+    }
+
+    /* Lecteur audio */
+    .audio-player {
+      background: rgba(139, 92, 246, 0.1);
+      border: 1px solid rgba(139, 92, 246, 0.2);
+      backdrop-filter: blur(10px);
+      padding: 40px;
+      border-radius: 20px;
+      text-align: center;
+      margin-bottom: 32px;
+      box-shadow: 
+        0 8px 24px rgba(139, 92, 246, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    }
+
+    .album-cover {
+      width: 240px;
+      height: 240px;
+      margin: 0 auto 24px;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 
+        0 20px 40px rgba(0, 0, 0, 0.4),
+        0 0 0 1px rgba(255, 255, 255, 0.1);
+      position: relative;
+    }
+
+    .album-cover img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s;
+    }
+
+    .album-cover:hover img {
+      transform: scale(1.05);
+    }
+
+    .play-btn {
+      background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+      color: #fff;
+      border: none;
+      padding: 16px 48px;
+      border-radius: 12px;
+      font-size: 1.125rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      box-shadow: 
+        0 4px 12px rgba(139, 92, 246, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+      margin-top: 16px;
+    }
+
+    .play-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 
+        0 8px 20px rgba(139, 92, 246, 0.5),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    }
+
+    .play-btn:active {
+      transform: translateY(0);
+    }
+
+    .player-hint {
+      margin-top: 16px;
+      color: rgba(255, 255, 255, 0.4);
+      font-size: 0.875rem;
+    }
+
+    /* Zone de réponse */
+    .answer-zone {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      padding: 32px;
+      border-radius: 20px;
+      margin-bottom: 24px;
+    }
+
+    .answer-zone h3 {
+      color: #fff;
+      margin-bottom: 20px;
+      font-size: 1.25rem;
+      font-weight: 600;
+    }
+
+    .answer-input {
+      width: 100%;
+      padding: 16px 20px;
+      font-size: 1.125rem;
+      background: rgba(255, 255, 255, 0.08);
+      border: 2px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      color: #fff;
+      margin-bottom: 16px;
+      transition: all 0.3s;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .answer-input::placeholder {
+      color: rgba(255, 255, 255, 0.3);
+    }
+
+    .answer-input:focus {
+      outline: none;
+      border-color: #8b5cf6;
+      background: rgba(255, 255, 255, 0.1);
+      box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.1);
+    }
+
+    .submit-btn {
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: #fff;
+      border: none;
+      padding: 16px;
+      border-radius: 12px;
+      font-size: 1.125rem;
+      font-weight: 600;
+      cursor: pointer;
+      width: 100%;
+      transition: all 0.3s;
+      box-shadow: 
+        0 4px 12px rgba(16, 185, 129, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    }
+
+    .submit-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 
+        0 8px 20px rgba(16, 185, 129, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    }
+
+    .skip-btn {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: rgba(255, 255, 255, 0.7);
+      padding: 12px;
+      border-radius: 12px;
+      font-size: 1rem;
+      font-weight: 500;
+      cursor: pointer;
+      margin-top: 12px;
+      width: 100%;
+      transition: all 0.3s;
+    }
+
+    .skip-btn:hover {
+      background: rgba(255, 255, 255, 0.12);
+      color: #fff;
+    }
+
+    /* Feedback */
+    .feedback {
+      padding: 20px;
+      border-radius: 12px;
+      margin-bottom: 24px;
+      text-align: center;
+      font-size: 1.125rem;
+      font-weight: 600;
+      display: none;
+      animation: slideIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(-12px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .feedback.show {
+      display: block;
+    }
+
+    .feedback.correct {
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      color: #10b981;
+    }
+
+    .feedback.wrong {
+      background: rgba(239, 68, 68, 0.15);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      color: #ef4444;
+    }
+
+    /* Écran de fin */
+    .end-screen {
+      display: none;
+      text-align: center;
+    }
+
+    .end-screen.active {
+      display: block;
+    }
+
+    .end-screen h2 {
+      color: #fff;
+      font-size: 2rem;
+      font-weight: 600;
+      margin-bottom: 24px;
+    }
+
+    .final-score {
+      font-size: 5rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #a78bfa, #8b5cf6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin: 32px 0;
+    }
+
+    .message {
+      font-size: 1.25rem;
+      color: rgba(255, 255, 255, 0.7);
+      margin-bottom: 40px;
+      font-weight: 500;
+    }
+
+    .restart-btn {
+      background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+      color: #fff;
+      border: none;
+      padding: 18px 56px;
+      border-radius: 12px;
+      font-size: 1.125rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      box-shadow: 
+        0 4px 12px rgba(139, 92, 246, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    }
+
+    .restart-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 
+        0 8px 20px rgba(139, 92, 246, 0.5),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    }
+
+    /* Loading */
+    .loading {
+      text-align: center;
+      padding: 40px;
+      display: none;
+    }
+
+    .loading.show {
+      display: block;
+    }
+
+    .spinner {
+      border: 3px solid rgba(255, 255, 255, 0.1);
+      border-top: 3px solid #8b5cf6;
+      border-radius: 50%;
+      width: 48px;
+      height: 48px;
+      animation: spin 0.8s linear infinite;
+      margin: 0 auto 20px;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .loading p {
+      color: rgba(255, 255, 255, 0.6);
+      font-size: 0.875rem;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 32px 24px;
+      }
+
+      h1 {
+        font-size: 2rem;
+      }
+
+      .game-header {
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+
+      .genre-selection {
+        grid-template-columns: 1fr;
+      }
+
+      .album-cover {
+        width: 200px;
+        height: 200px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>Blind Test Musical</h1>
+      <p class="subtitle">Testez vos connaissances musicales</p>
+      <span class="badge">Correction</span>
+    </div>
+
+    <!-- Écran de démarrage -->
+    <div class="start-screen" id="startScreen">
+      <h2>Choisissez un genre musical</h2>
+      <div class="genre-selection">
+        <button class="genre-btn" onclick="startGame('pop')">Pop</button>
+        <button class="genre-btn" onclick="startGame('rock')">Rock</button>
+        <button class="genre-btn" onclick="startGame('hip-hop')">Hip-Hop</button>
+        <button class="genre-btn" onclick="startGame('electronic')">Electronic</button>
+      </div>
+    </div>
+
+    <!-- Loading -->
+    <div class="loading" id="loading">
+      <div class="spinner"></div>
+      <p>Chargement des musiques depuis iTunes...</p>
+    </div>
+
+    <!-- Écran de jeu -->
+    <div class="game-screen" id="gameScreen">
+      <div class="game-header">
+        <div class="stat-card">
+          <div class="stat-label">Score</div>
+          <div class="stat-value" id="scoreDisplay">0</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Manche</div>
+          <div class="stat-value" id="roundDisplay">1/10</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Temps</div>
+          <div class="stat-value" id="timerDisplay">30</div>
+        </div>
+      </div>
+
+      <!-- Lecteur audio -->
+      <div class="audio-player">
+        <div class="album-cover" id="albumCover">
+          <img src="https://via.placeholder.com/240" alt="Album">
+        </div>
+        <button class="play-btn" id="playBtn" onclick="togglePlay()">Jouer</button>
+        <p class="player-hint">Écoutez l'extrait et devinez l'artiste</p>
+      </div>
+
+      <!-- Feedback -->
+      <div class="feedback" id="feedback"></div>
+
+      <!-- Zone de réponse -->
+      <div class="answer-zone">
+        <h3>Qui est l'artiste ?</h3>
+        <input 
+          type="text" 
+          class="answer-input" 
+          id="answerInput" 
+          placeholder="Entrez le nom de l'artiste..."
+          onkeypress="handleKeyPress(event)"
+        >
+        <button class="submit-btn" onclick="checkAnswer()">Valider ma réponse</button>
+        <button class="skip-btn" onclick="skipSong()">Passer cette chanson</button>
+      </div>
+    </div>
+
+    <!-- Écran de fin -->
+    <div class="end-screen" id="endScreen">
+      <h2>Partie terminée</h2>
+      <div class="final-score" id="finalScore">0</div>
+      <p class="message" id="finalMessage">Bravo</p>
+      <button class="restart-btn" onclick="restartGame()">Rejouer</button>
+    </div>
+  </div>
+
+  <script>
+    // Variables globales
+    let score = 0;
+    let currentRound = 0;
+    let totalRounds = 10;
+    let timer = 30;
+    let timerInterval = null;
+    let currentSong = null;
+    let playlist = [];
+    let audioPlayer = new Audio();
+    let selectedGenre = '';
+
+    const topArtists = {
+      'pop': ['Taylor Swift', 'Ed Sheeran', 'Ariana Grande', 'Dua Lipa', 'The Weeknd'],
+      'rock': ['Queen', 'The Beatles', 'Nirvana', 'Foo Fighters', 'Arctic Monkeys'],
+      'hip-hop': ['Drake', 'Kendrick Lamar', 'Post Malone', 'Travis Scott', 'Eminem'],
+      'electronic': ['Daft Punk', 'Calvin Harris', 'David Guetta', 'Avicii', 'Kygo']
+    };
+
+    function startGame(genre) {
+      selectedGenre = genre;
+      document.querySelector('#startScreen').style.display = 'none';
+      document.querySelector('#loading').classList.add('show');
+      fetchPlaylist(genre);
+      console.log('Démarrage - Genre:', genre);
+    }
+
+    async function fetchPlaylist(genre) {
+      try {
+        playlist = [];
+        const artists = topArtists[genre];
+        
+        console.log('Recherche de', artists.length, 'artistes sur iTunes...');
+        
+        for (let i = 0; i < artists.length; i++) {
+          const artist = artists[i];
+          
+          try {
+            const url = `https://itunes.apple.com/search?term=${encodeURIComponent(artist)}&media=music&entity=song&limit=1`;
+            const response = await fetch(url);
+            const data = await response.json();
+            
+            if (data.results && data.results.length > 0) {
+              const track = data.results[0];
+              
+              if (track.previewUrl) {
+                playlist.push({
+                  title: track.trackName,
+                  artist: track.artistName,
+                  preview: track.previewUrl,
+                  cover: track.artworkUrl100.replace('100x100', '600x600')
+                });
+                
+                console.log(`${i + 1}/${artists.length} - ${track.artistName} - ${track.trackName}`);
+              }
+            }
+          } catch (error) {
+            console.error(`Erreur pour ${artist}:`, error);
+          }
+        }
+        
+        if (playlist.length === 0) {
+          alert('Impossible de charger les musiques. Réessayez.');
+          restartGame();
+          return;
+        }
+        
+        console.log('Playlist chargée:', playlist.length, 'chansons');
+        shufflePlaylist();
+        initGame();
+        
+      } catch (error) {
+        console.error('Erreur:', error);
+        alert('Erreur de chargement. Réessayez.');
+        restartGame();
+      }
+    }
+
+    function shufflePlaylist() {
+      for (let i = playlist.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [playlist[i], playlist[j]] = [playlist[j], playlist[i]];
+      }
+      console.log('Playlist mélangée');
+    }
+
+    function initGame() {
+      score = 0;
+      currentRound = 0;
+      document.querySelector('#loading').classList.remove('show');
+      document.querySelector('#gameScreen').classList.add('active');
+      loadNextSong();
+      console.log('Jeu initialisé');
+    }
+
+    function loadNextSong() {
+      if (currentRound < totalRounds && currentRound < playlist.length) {
+        currentSong = playlist[currentRound];
+        audioPlayer.src = currentSong.preview;
+        audioPlayer.load();
+        
+        document.querySelector('#albumCover img').src = currentSong.cover;
+        
+        updateUI();
+        hideFeedback();
+        currentRound++;
+        document.querySelector('#roundDisplay').textContent = `${currentRound}/${totalRounds}`;
+        console.log(`Chanson ${currentRound}/${totalRounds}:`, currentSong.title);
+      } else {
+        endGame();
+      }
+    }
+
+    function togglePlay() {
+      const playBtn = document.querySelector('#playBtn');
+      
+      if (audioPlayer.paused) {
+        audioPlayer.play();
+        playBtn.textContent = 'Pause';
+        startTimer();
+        console.log('Lecture');
+      } else {
+        audioPlayer.pause();
+        playBtn.textContent = 'Jouer';
+        stopTimer();
+        console.log('Pause');
+      }
+    }
+
+    function startTimer() {
+      timer = 30;
+      stopTimer();
+      
+      timerInterval = setInterval(() => {
+        timer--;
+        const timerDisplay = document.querySelector('#timerDisplay');
+        timerDisplay.textContent = timer;
+        
+        if (timer <= 10) {
+          timerDisplay.classList.add('warning');
+        } else {
+          timerDisplay.classList.remove('warning');
+        }
+        
+        if (timer <= 0) {
+          stopTimer();
+          audioPlayer.pause();
+          showFeedback(false, currentSong.artist);
+          setTimeout(() => loadNextSong(), 2500);
+        }
+      }, 1000);
+    }
+
+    function stopTimer() {
+      if (timerInterval) {
+        clearInterval(timerInterval);
+        timerInterval = null;
+      }
+    }
+
+    function checkAnswer() {
+      const userAnswer = document.querySelector('#answerInput').value;
+      
+      if (!userAnswer.trim()) {
+        alert('Entrez une réponse');
+        return;
+      }
+      
+      const normalizedUser = normalizeString(userAnswer);
+      const normalizedCorrect = normalizeString(currentSong.artist);
+      
+      const isCorrect = normalizedUser === normalizedCorrect || 
+                        normalizedCorrect.includes(normalizedUser) ||
+                        normalizedUser.includes(normalizedCorrect);
+      
+      audioPlayer.pause();
+      stopTimer();
+      
+      if (isCorrect) {
+        const points = Math.max(50, timer * 3);
+        score += points;
+        showFeedback(true);
+        console.log(`Bonne réponse ! +${points} points`);
+      } else {
+        showFeedback(false, currentSong.artist);
+        console.log('Mauvaise réponse');
+      }
+      
+      document.querySelector('#scoreDisplay').textContent = score;
+      setTimeout(() => loadNextSong(), 2500);
+    }
+
+    function showFeedback(isCorrect, correctAnswer = '') {
+      const feedback = document.querySelector('#feedback');
+      
+      if (isCorrect) {
+        feedback.textContent = 'Bravo ! Bonne réponse !';
+        feedback.className = 'feedback correct show';
+      } else {
+        feedback.textContent = `Raté ! C'était ${correctAnswer}`;
+        feedback.className = 'feedback wrong show';
+      }
+    }
+
+    function hideFeedback() {
+      const feedback = document.querySelector('#feedback');
+      feedback.classList.remove('show', 'correct', 'wrong');
+    }
+
+    function skipSong() {
+      audioPlayer.pause();
+      stopTimer();
+      showFeedback(false, currentSong.artist);
+      console.log('Chanson passée');
+      setTimeout(() => loadNextSong(), 2500);
+    }
+
+    function updateUI() {
+      document.querySelector('#scoreDisplay').textContent = score;
+      document.querySelector('#roundDisplay').textContent = `${currentRound + 1}/${totalRounds}`;
+      timer = 30;
+      document.querySelector('#timerDisplay').textContent = timer;
+      document.querySelector('#timerDisplay').classList.remove('warning');
+      document.querySelector('#answerInput').value = '';
+      document.querySelector('#playBtn').textContent = 'Jouer';
+    }
+
+    function endGame() {
+      document.querySelector('#gameScreen').classList.remove('active');
+      document.querySelector('#endScreen').classList.add('active');
+      document.querySelector('#finalScore').textContent = score;
+      
+      const maxScore = totalRounds * 90;
+      const percentage = (score / maxScore) * 100;
+      
+      let message = '';
+      if (percentage >= 80) message = 'Incroyable ! Vous êtes un expert !';
+      else if (percentage >= 60) message = 'Très bien ! Belle performance !';
+      else if (percentage >= 40) message = 'Pas mal ! Continuez comme ça !';
+      else if (percentage >= 20) message = 'C\'est un début ! Réessayez !';
+      else message = 'Ne lâchez rien !';
+      
+      document.querySelector('#finalMessage').textContent = message;
+      console.log('Fin - Score:', score);
+    }
+
+    function restartGame() {
+      score = 0;
+      currentRound = 0;
+      timer = 30;
+      currentSong = null;
+      playlist = [];
+      audioPlayer.pause();
+      audioPlayer.src = '';
+      stopTimer();
+      document.querySelector('#endScreen').classList.remove('active');
+      document.querySelector('#gameScreen').classList.remove('active');
+      document.querySelector('#loading').classList.remove('show');
+      document.querySelector('#startScreen').style.display = 'block';
+      console.log('Réinitialisé');
+    }
+
+    function handleKeyPress(event) {
+      if (event.key === 'Enter') {
+        checkAnswer();
+      }
+    }
+
+    function normalizeString(str) {
+      return str
+        .toLowerCase()
+        .trim()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .replace(/[^a-z0-9\s]/g, '')
+        .replace(/\s+/g, ' ');
+    }
+
+    audioPlayer.addEventListener('ended', () => {
+      console.log('Chanson terminée');
+      skipSong();
+    });
+
+    console.log('%cBlind Test Musical - iTunes API', 'color: #8b5cf6; font-size: 20px; font-weight: bold;');
+    console.log('%cAudio réel qui fonctionne !', 'color: #10b981; font-size: 14px;');
+  </script>
+</body>
+</html>
