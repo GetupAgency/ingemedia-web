@@ -1,0 +1,46 @@
+🎯 2 DERNIÈRES ÉTAPES (5 minutes max)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+ÉTAPE 1 : Créer les tables (2 min)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1. Va sur : https://supabase.com/dashboard/project/moqvghbfebrjmfotlkjk
+
+2. Menu gauche → SQL Editor
+
+3. New Query
+
+4. Copie TOUT le fichier "supabase-schema.sql"
+
+5. Colle dans l'éditeur
+
+6. Clique RUN ▶️
+
+✅ Tu devrais voir : "Success. No rows returned"
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+ÉTAPE 2 : Activer Realtime (1 min)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1. Menu gauche → Database → Replication
+
+2. Dans la section "Source", active les 3 tables :
+   ☑️ game_sessions
+   ☑️ teams
+   ☑️ answers
+
+3. Save
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🎮 C'EST PRÊT !
+
+Ouvre index.html et teste avec 2 onglets :
+- Onglet 1 : "Je suis le PROF"
+- Onglet 2 : "Je suis une ÉQUIPE"
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Push sur Git → Déploiement auto sur Vercel 🚀

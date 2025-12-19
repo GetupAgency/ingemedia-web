@@ -1,13 +1,14 @@
-🚀 3 CHOSES À FAIRE AVANT DE LANCER :
+🚀 2 CHOSES À FAIRE AVANT DE LANCER :
 
-1. ✅ Exécuter supabase-schema.sql dans Supabase SQL Editor
+1. ⬜ Exécuter supabase-schema.sql dans Supabase SQL Editor
+   → https://supabase.com/dashboard/project/moqvghbfebrjmfotlkjk
 
-2. ✅ Activer Realtime sur les tables :
+2. ⬜ Activer Realtime sur les tables :
    - game_sessions
    - teams
    - answers
+   Database → Replication → Cocher les 3 tables
    
-3. ✅ Mettre votre clé Supabase dans script-supabase.js ligne 9 :
-   const SUPABASE_KEY = 'VOTRE_CLE_ANON_ICI';
+3. ✅ Clé API configurée ✓
 
-📖 Détails : START_HERE.md
+📖 Détails : PRET_A_LANCER.md

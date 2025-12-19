@@ -4,19 +4,8 @@
 
 const SUPABASE_URL = 'https://moqvghbfebrjmfotlkjk.supabase.co';
 
-// ⚠️ IMPORTANT : Mettez votre clé ANON (pas la service_role !)
-// La clé doit commencer par "eyJ..." et faire plusieurs lignes de long
-// 
-// Pour la trouver :
-// 1. https://moqvghbfebrjmfotlkjk.supabase.co
-// 2. Project Settings (icône ⚙️ en bas à gauche)
-// 3. API
-// 4. Sous "Project API keys", copiez la clé "anon" "public"
-//    (PAS la "service_role" qui est secrète !)
-
-// ⚠️ REMPLACE CETTE CLÉ PAR LA VRAIE !
-// Voir ACCES_DASHBOARD.md pour savoir comment récupérer ta clé
-const SUPABASE_KEY = 'VOTRE_CLE_ANON_COMPLETE_ICI_eyJhbGc...';
+// ✅ Publishable API Key (safe to use in browser)
+const SUPABASE_KEY = 'sb_publishable_ycy5qwvRuYJHkzhz5u6mIg_0OmMp_-i';
 
 const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
